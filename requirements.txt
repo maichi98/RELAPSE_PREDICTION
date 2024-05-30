@@ -1,0 +1,9 @@
+pandas
+numpy
+seaborn
+scipy
+monai
+pyarrow
+opencv-python
+antspyx
+scikit-learn
