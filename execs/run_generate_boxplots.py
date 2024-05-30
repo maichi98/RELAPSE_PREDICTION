@@ -64,7 +64,7 @@ def process_patient_label(patient, label):
 
 
 def process_patient(patient):
-    labels = ["(L1 + L3)", "L2", "L3", "L4", "L5", "(L4 + L5)", "L3R", "L3R - (L1 + L3)"]
+    labels = ["L3R", "L3R - (L1 + L3)"]
     with ProcessPoolExecutor(max_workers=3) as executor:
         futures = {executor.submit(process_patient_label, patient, label) for label in labels}
         for future in as_completed(futures):
@@ -72,8 +72,8 @@ def process_patient(patient):
 
 
 def main():
-    with ProcessPoolExecutor(max_workers=2) as executor:
-        futures = {executor.submit(process_patient, patient): patient for patient in constants.list_patients[:1]}
+    with ProcessPoolExecutor(max_workers=4) as executor:
+        futures = {executor.submit(process_patient, patient): patient for patient in constants.list_patients}
         for future in as_completed(futures):
             future.result()
 

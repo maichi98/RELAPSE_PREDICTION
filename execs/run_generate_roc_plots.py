@@ -71,7 +71,7 @@ def process_patient_label_imaging_feature(patient, label, imaging, feature):
 
 def process_patient_label_imaging(patient, label, imaging):
     L_features = [imaging, f"{imaging}_mean_3x3", f"{imaging}_mean_5x5", f"{imaging}_mean_3x3x3", f"{imaging}_mean_5x5x5"]
-    with ProcessPoolExecutor(max_workers=2) as executor:
+    with ProcessPoolExecutor(max_workers=3) as executor:
         futures = {executor.submit(process_patient_label_imaging_feature, patient, label, imaging, feature) for feature in L_features}
         for future in as_completed(futures):
             future.result()
@@ -79,23 +79,22 @@ def process_patient_label_imaging(patient, label, imaging):
 
 def process_patient_label(patient, label):
     L_imaging = constants.L_CERCARE_MAPS + constants.L_IRM_MAPS
-    with ProcessPoolExecutor(max_workers=2) as executor:
+    with ProcessPoolExecutor(max_workers=3) as executor:
         futures = {executor.submit(process_patient_label_imaging, patient, label, imaging) for imaging in L_imaging}
         for future in as_completed(futures):
             future.result()
 
 
 def process_patient(patient):
-    # labels = ["(L1 + L3)", "L2", "L3", "L4", "L5", "(L4 + L5)", "L3R", "L3R - (L1 + L3)"]
-    labels = ["(L1 + L3)", "L2", "L3", "L4", "L5", "(L4 + L5)", "L3R", "L3R - (L1 + L3)"]
-    with ProcessPoolExecutor(max_workers=2) as executor:
+    labels = ["L3R", "L3R - (L1 + L3)"]
+    with ProcessPoolExecutor(max_workers=3) as executor:
         futures = {executor.submit(process_patient_label, patient, label) for label in labels}
         for future in as_completed(futures):
             future.result()
 
 
 def main():
-    with ProcessPoolExecutor(max_workers=2) as executor:
+    with ProcessPoolExecutor(max_workers=3) as executor:
         futures = {executor.submit(process_patient, patient): patient for patient in constants.list_patients}
         for future in as_completed(futures):
             future.result()
