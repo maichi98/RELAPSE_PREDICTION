@@ -2,6 +2,7 @@ from relapse_prediction import constants, features, labels
 
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from sklearn.metrics import roc_curve, auc
+from tqdm import tqdm
 import seaborn as sn
 import pandas as pd
 import pickle
@@ -56,39 +57,16 @@ def process_patient_label_imaging_feature(patient, label, imaging, feature):
     plt.savefig(os.path.join(str(dir_save), f"{patient}.png"), dpi=300)
     plt.clf()
 
-    print(f"Patient {patient}, label {f'{label}_5x5x5'}, imaging {imaging}, feature {feature} has been processed.")
-
-
-def process_patient_label_imaging(patient, label, imaging):
-    L_features = ["mean_5x5x5"]
-    with ProcessPoolExecutor(max_workers=2) as executor:
-        futures = {executor.submit(process_patient_label_imaging_feature, patient, label, imaging, feature) for feature in L_features}
-        for future in as_completed(futures):
-            future.result()
-
-
-def process_patient_label(patient, label):
-    L_imaging = constants.L_IRM_MAPS
-    with ProcessPoolExecutor(max_workers=2) as executor:
-        futures = {executor.submit(process_patient_label_imaging, patient, label, imaging) for imaging in L_imaging}
-        for future in as_completed(futures):
-            future.result()
-
-
-def process_patient(patient):
-    labels = ["L3R_5x5x5", "L3R - (L1 + L3)_5x5x5"]
-    with ProcessPoolExecutor(max_workers=2) as executor:
-        futures = {executor.submit(process_patient_label, patient, label) for label in labels}
-        for future in as_completed(futures):
-            future.result()
+    print(f"Patient {patient}, label {label}, imaging {imaging}, feature {feature} has been processed.")
 
 
 def main():
 
-    for patient in constants.list_patients:
-        for label in ["L3R_5x5x5", "L3R - (L1 + L3)_5x5x5"]:
+    for patient in tqdm(constants.list_patients):
+        for label in ["L3R", "L3R_5x5x5", "L3R - (L1 + L3)", "L3R - (L1 + L3)_5x5x5"]:
             for imaging in constants.L_IRM_MAPS:
-                process_patient_label_imaging_feature(patient, label, imaging, feature="mean_5x5x5")
+                for feature in [imaging, "mean_5x5x5"]:
+                    process_patient_label_imaging_feature(patient, label, imaging, feature)
 
 
 if __name__ == "__main__":

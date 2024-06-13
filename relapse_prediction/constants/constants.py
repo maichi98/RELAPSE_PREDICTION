@@ -47,7 +47,7 @@ L_CERCARE_MAPS = ["COV", "CTH", "Delay", "rCBV", "rLeakage", "OEF", "rCMRO2"]
 L_IRM_MAPS = ["T1CE", "T1", "FLAIR"]
 
 # List of AIDREAM patients :
-list_bad_patients = {"AIDREAM_32", "AIDREAM_102", "AIDREAM_238"}
+list_bad_patients = {"AIDREAM_32", "AIDREAM_102", "AIDREAM_238", "AIDREAM_152"}
 list_patients = list(set(os.listdir(dir_processed)) - list_bad_patients)
 list_patients = [list_patients[i] for i in np.argsort([int(patient.strip("AIDREAM_")) for patient in list_patients])]
 

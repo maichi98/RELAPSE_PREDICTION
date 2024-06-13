@@ -2,6 +2,7 @@ from relapse_prediction import constants, features, labels
 
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from sklearn.metrics import roc_curve, auc
+from tqdm import tqdm
 import seaborn as sn
 import pandas as pd
 import pickle
@@ -9,6 +10,7 @@ import os
 
 
 def process_patient_label_imaging_feature(patient, label, imaging, feature):
+
     path_labels = constants.dir_labels / f"{patient}_labels.parquet"
     df_labels = path_labels = pd.read_parquet(path_labels, engine="pyarrow")
     df_labels = df_labels[["x", "y", "z", label]]
@@ -21,14 +23,14 @@ def process_patient_label_imaging_feature(patient, label, imaging, feature):
     df_features = df_features[['x', 'y', 'z', feature]]
 
     df_data = df_labels.merge(df_features, on=["x", "y", "z"], how="left")
-
+    
     fpr, tpr, thresholds = roc_curve(df_data[label], df_data[feature])
     d_res = {
         "fpr": fpr,
         "tpr": tpr,
         "thresholds": thresholds
     }
-
+    
     path_roc_results = constants.dir_results / "thresholds per patient" / label / imaging / feature / f"{patient}.pickle"
     path_roc_results.parent.mkdir(parents=True, exist_ok=True)
 
@@ -55,11 +57,11 @@ def process_patient_label_imaging_feature(patient, label, imaging, feature):
     plt.savefig(os.path.join(str(dir_save), f"{patient}.png"), dpi=300)
     plt.clf()
 
-    print(f"Patient {patient}, label {f'{label}_5x5x5'}, imaging {imaging}, feature {feature} has been processed.")
+    print(f"Patient {patient}, label {label}, imaging {imaging}, feature {feature} has been processed.")
 
 
 def process_patient_label_imaging(patient, label, imaging):
-    L_features = ["mean_5x5x5"]
+    L_features = [imaging, "mean_5x5x5"]
     with ProcessPoolExecutor(max_workers=2) as executor:
         futures = {executor.submit(process_patient_label_imaging_feature, patient, label, imaging, feature) for feature in L_features}
         for future in as_completed(futures):
@@ -75,7 +77,7 @@ def process_patient_label(patient, label):
 
 
 def process_patient(patient):
-    labels = ["L3R_5x5x5", "L3R - (L1 + L3)_5x5x5"]
+    labels = ["L3R", "L3R_5x5x5", "L3R - (L1 + L3)", "L3R - (L1 + L3)_5x5x5"]
     with ProcessPoolExecutor(max_workers=2) as executor:
         futures = {executor.submit(process_patient_label, patient, label) for label in labels}
         for future in as_completed(futures):
