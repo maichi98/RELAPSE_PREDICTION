@@ -12,11 +12,13 @@ import pickle
 
 def get_list_thresholds(imaging, label, feature):
 
+    feature = f"{imaging}_{feature}" if imaging != feature else imaging
+
     list_thresholds = set()
 
     for patient in constants.list_patients:
 
-        with open(constants.dir_thresholds / label / imaging / f"{imaging}_{feature}" / f"{patient}.pickle", "rb") as f:
+        with open(constants.dir_thresholds / label / imaging / feature / f"{patient}.pickle", "rb") as f:
             dict_thresholds = pickle.load(f)
 
         list_thresholds = list_thresholds.union(set(dict_thresholds["thresholds"]))
@@ -26,7 +28,9 @@ def get_list_thresholds(imaging, label, feature):
 
 def load_threshold_dataframe(patient, imaging, label, feature):
 
-    with open(constants.dir_thresholds / label / imaging / f"{imaging}_{feature}" / f"{patient}.pickle", "rb") as f:
+    feature = f"{imaging}_{feature}" if imaging != feature else imaging
+
+    with open(constants.dir_thresholds / label / imaging / feature / f"{patient}.pickle", "rb") as f:
         dict_thresholds = pickle.load(f)
 
     df_labels = pd.read_parquet(constants.dir_labels / f"{patient}_labels.parquet", engine="pyarrow")
@@ -99,8 +103,7 @@ def plot_total_roc(imaging, label, feature, dict_fpr_tpr):
     tpr = dict_fpr_tpr["tpr"]
 
     roc_auc = auc(fpr, tpr)
-
-    print(f"ROC AUC: {roc_auc}")
+    txt = f"ROC AUC for label={label}, imaging={imaging}, feature={feature}: {roc_auc}"
 
     dir_save = constants.dir_results / "total_ROC" / label 
     dir_save.mkdir(parents=True, exist_ok=True)
@@ -115,7 +118,8 @@ def plot_total_roc(imaging, label, feature, dict_fpr_tpr):
     plt.title(f'ROC curve for label: {f"{label}_{feature}"}, imaging: {imaging}')
     plt.legend(loc="lower right")
 
-    
+    with open(constants.dir_results / "total aucs.txt", "a+") as f:
+        f.write(txt + "\n")
 
     plt.savefig(str(dir_save / f"{imaging}_{feature}.png"), dpi=300)
     plt.clf()
@@ -150,7 +154,7 @@ def print_cutoff(label, imaging, feature, dict_fpr_tpr):
 
     txt = f"Cutoff value for label={label}, imaging={imaging}, feature={feature}: {cutoff}"
 
-    with open(constants.dir_results / "total_cuttofs.txt", "a+") as f:
+    with open(constants.dir_results / "total cutoffs.txt", "a+") as f:
         f.write(txt + "\n")
 
     print(f"Cutoff value for label={label}, imaging={imaging}, feature={feature}", cutoff)
@@ -158,13 +162,12 @@ def print_cutoff(label, imaging, feature, dict_fpr_tpr):
 
 def main():
 
-    list_imaging = constants.L_IRM_MAPS + constants.L_CERCARE_MAPS
-    list_labels = ["L3R_5x5x5", "L3R - (L1 + L3)_5x5x5"]
-    list_features = ["mean_5x5x5"]
+    list_imaging = constants.L_IRM_MAPS
+    list_labels = ["L3R", "L3R_5x5x5", "L3R - (L1 + L3)", "L3R - (L1 + L3)_5x5x5"]
 
     for imaging in constants.L_IRM_MAPS:
         for label in list_labels:
-            for feature in list_features:
+            for feature in [imaging, "mean_5x5x5"]:
 
                 print("get list of thresholds ...")
                 list_thresholds = get_list_thresholds(imaging, label, feature)
