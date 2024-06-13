@@ -9,21 +9,26 @@ import os
 
 def process_patient_label_imaging_feature(patient, label, imaging, feature):
 
-    df_labels = labels.get_df_labels(patient)
+    path_labels = constants.dir_labels / f"{patient}_labels.parquet"
+    df_labels = path_labels = constants.dir_labels / f"{patient}_labels.parquet"
+    df_labels = df_labels[["x", "y", "z", label]]
 
-    df_features = features.get_df_imaging_features(patient, imaging)
+    path_features = constants.dir_features / patient / fr"{patient}_{imaging}_features.parquet"
+    df_features = pd.read_parquet(path_features, engine="pyarrow")
     rename_columns = {col: f"{imaging}_{col}" for col in set(df_features.columns) - {'x', 'y', 'z', imaging}}
     df_features.rename(columns=rename_columns, inplace=True)
+    feature = f"{imaging}_{feature}" if imaging != feature else feature
+    df_features = df_features[['x', 'y', 'z', feature]]
 
     df_data = df_labels.merge(df_features, on=["x", "y", "z"], how="left")
-
+    
     fpr, tpr, thresholds = roc_curve(df_data[label], df_data[feature])
     d_res = {
         "fpr": fpr,
         "tpr": tpr,
         "thresholds": thresholds
     }
-
+    
     path_roc_results = constants.dir_results / "thresholds per patient" / label / imaging / feature / f"{patient}.pickle"
     path_roc_results.parent.mkdir(parents=True, exist_ok=True)
 
@@ -32,9 +37,8 @@ def process_patient_label_imaging_feature(patient, label, imaging, feature):
 
     # AUC value :
     roc_auc = auc(fpr, tpr)
-    dir_save = os.path.join(constants.dir_results, "ROC per patient", label, imaging, feature)
-    if not os.path.exists(dir_save):
-        os.makedirs(dir_save)
+    dir_save = constants.dir_results / "ROC per patient" / label / imaging / feature
+    dir_save.mkdir(exist_ok=True, parents=True)
 
     import matplotlib.pyplot as plt
 
@@ -51,31 +55,19 @@ def process_patient_label_imaging_feature(patient, label, imaging, feature):
     plt.savefig(os.path.join(str(dir_save), f"{patient}.png"), dpi=300)
     plt.clf()
 
-    d_auc = {"patient": patient,
-             "label": label,
-             "feature": feature,
-             "AUC": roc_auc}
-
-    dir_save = os.path.join(constants.dir_results, "AUC", label, imaging, feature)
-    if not os.path.exists(dir_save):
-        os.makedirs(dir_save)
-
-    with open(os.path.join(str(dir_save), f"{patient}.pkl"), "wb") as f:
-        pickle.dump(d_auc, f)
-
     print(f"Patient {patient}, label {f'{label}_5x5x5'}, imaging {imaging}, feature {feature} has been processed.")
 
 
 def process_patient_label_imaging(patient, label, imaging):
-    L_features = [f"{imaging}_mean_5x5x5"]
-    with ProcessPoolExecutor(max_workers=3) as executor:
+    L_features = ["mean_5x5x5"]
+    with ProcessPoolExecutor(max_workers=2) as executor:
         futures = {executor.submit(process_patient_label_imaging_feature, patient, label, imaging, feature) for feature in L_features}
         for future in as_completed(futures):
             future.result()
 
 
 def process_patient_label(patient, label):
-    L_imaging = constants.L_IRM_MAPS + constants.L_CERCARE_MAPS
+    L_imaging = constants.L_IRM_MAPS
     with ProcessPoolExecutor(max_workers=2) as executor:
         futures = {executor.submit(process_patient_label_imaging, patient, label, imaging) for imaging in L_imaging}
         for future in as_completed(futures):

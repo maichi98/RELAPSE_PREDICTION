@@ -19,7 +19,7 @@ __all__ = [
 ]
 
 # Hard drive directory :
-dir_root = Path("/media/maichi/SSD-IGR") if platform.system() == "Linux" else Path("D:")
+dir_root = Path("/media/maichi/SSD-IGR") if platform.system() == "Linux" else Path("E:")
 
 # AIDREAM_DATA directory :
 dir_aidream_data = dir_root / "AIDREAM_DATA"

@@ -1,6 +1,7 @@
 from relapse_prediction import constants
 
 from torch.nn.functional import conv2d, conv3d
+from tqdm import tqdm
 import pandas as pd
 import numpy as np
 import torch
@@ -42,3 +43,18 @@ def convolve(arr, kernel):
         raise ValueError("the Kernel should be 2D, or 3D !")
 
     return output.squeeze().numpy()
+
+
+def get_list_imaging_features(imaging, feature):
+    
+    list_features = []
+    for patient in constants.list_patients:
+        
+        path_features = constants.dir_features / patient / fr"{patient}_{imaging}_features.parquet"
+        df_features = pd.read_parquet(path_features, engine="pyarrow")
+        list_features += df_features[feature].tolist()
+
+    return list_features
+
+
+        
