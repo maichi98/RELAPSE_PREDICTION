@@ -51,13 +51,13 @@ list_bad_patients = {"AIDREAM_32", "AIDREAM_102", "AIDREAM_238"}
 list_patients = list(set(os.listdir(dir_processed)) - list_bad_patients)
 list_patients = [list_patients[i] for i in np.argsort([int(patient.strip("AIDREAM_")) for patient in list_patients])]
 
-D_KERNELS = {
-    "mean_3x3": np.ones((3, 3)) / 9,
-    "mean_5x5": np.ones((5, 5)) / 25,
-    "mean_3x3x3": np.ones((3, 3, 3)) / 27,
-    "mean_5x5x5": np.ones((5, 5, 5)) / 125
-}
+#D_KERNELS = {
+#    "mean_3x3": np.ones((3, 3)) / 9,
+#    "mean_5x5": np.ones((5, 5)) / 25,
+#    "mean_3x3x3": np.ones((3, 3, 3)) / 27,
+#    "mean_5x5x5": np.ones((5, 5, 5)) / 125
+#}
 
-# D_KERNELS = {
-#     "mean_5x5x5": np.ones((5, 5, 5)) / 125
-# }
+ D_KERNELS = {
+     "mean_5x5x5": np.ones((5, 5, 5)) / 125
+}
