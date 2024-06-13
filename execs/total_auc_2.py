@@ -11,11 +11,9 @@ import pickle
 
 
 def get_list_thresholds(imaging, label, feature):
-
     list_thresholds = set()
 
     for patient in tqdm(constants.list_patients):
-
         with open(constants.dir_thresholds / label / imaging / f"{imaging}_{feature}" / f"{patient}.pickle", "rb") as f:
             dict_thresholds = pickle.load(f)
 
@@ -31,7 +29,6 @@ def get_list_thresholds(imaging, label, feature):
 
 
 def load_threshold_dataframe(patient, imaging, label, feature):
-
     with open(constants.dir_thresholds / label / imaging / f"{imaging}_{feature}" / f"{patient}.pickle", "rb") as f:
         dict_thresholds = pickle.load(f)
 
@@ -50,7 +47,6 @@ def load_threshold_dataframe(patient, imaging, label, feature):
 
 
 def get_all_fpr_tpr(imaging, label, feature, list_thresholds):
-
     df_total = pd.DataFrame(columns=["thresholds", "TP", "FP"])
     df_total["thresholds"] = list(list_thresholds)
     df_total["TP"] = 0
@@ -59,7 +55,6 @@ def get_all_fpr_tpr(imaging, label, feature, list_thresholds):
     top_negatives = 0
 
     for patient in tqdm(constants.list_patients):
-
         df_thresholds = pd.DataFrame(list(list_thresholds), columns=["thresholds"])
         _df_thresholds, t_p, t_n = load_threshold_dataframe(patient, imaging, label, feature)
         df_thresholds = df_thresholds.merge(_df_thresholds, on="thresholds", how="left")
@@ -97,7 +92,6 @@ def get_all_fpr_tpr(imaging, label, feature, list_thresholds):
 
 
 def plot_total_roc(imaging, label, feature, dict_fpr_tpr):
-
     fpr = dict_fpr_tpr["fpr"]
     tpr = dict_fpr_tpr["tpr"]
 
@@ -142,7 +136,6 @@ def compute_cutoff_youden(fpr, tpr, thresholds, inverted=False):
 
 
 def print_cutoff(label, imaging, feature, dict_fpr_tpr):
-
     tpr = np.array(dict_fpr_tpr["tpr"])
     fpr = np.array(dict_fpr_tpr["fpr"])
     thresholds = dict_fpr_tpr["thresholds"]
@@ -158,23 +151,17 @@ def print_cutoff(label, imaging, feature, dict_fpr_tpr):
 
 
 def main():
-
     list_imaging = constants.L_IRM_MAPS + constants.L_CERCARE_MAPS
     list_labels = ["L3R_5x5x5", "L3R - (L1 + L3)_5x5x5"]
     list_features = ["mean_5x5x5"]
 
-    for imaging in list_imaging[0: 2]:
+    for imaging in list_imaging[2: 4]:
         for label in list_labels:
             for feature in list_features:
-
-                # print("get list of thresholds ...")
-                # list_thresholds = get_list_thresholds(imaging, label, feature)
-
-                with open(constants.dir_results / 'list_thresholds' / f"{label}_{imaging}_{feature}_list_thresholds.pickle", "rb") as f:
-                    list_thresholds = pickle.load(f)
-
-                print(f"aggregate tpr, fpr for {imaging}, {label}, {feature} ...")
-                dict_fpr_tpr = get_all_fpr_tpr(imaging, label, feature, list_thresholds)
+                print("get list of thresholds ...")
+                list_thresholds = get_list_thresholds(imaging, label, feature)
+                # print(f"aggregate tpr, fpr for {imaging}, {label}, {feature} ...")
+                # dict_fpr_tpr = get_all_fpr_tpr(imaging, label, feature, list_thresholds)
                 # print(f"plot total roc for {imaging}, {label}, {feature} ...")
                 # plot_total_roc(imaging, label, feature, dict_fpr_tpr)
                 #

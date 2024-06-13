@@ -1,6 +1,7 @@
 from relapse_prediction import constants
 from relapse_prediction import utils
 
+from scipy import stats
 import pandas as pd
 import ants
 import glob
@@ -32,6 +33,7 @@ def get_imaging_conv(patient, imaging, id_kernel, kernel, save=True, **kwargs):
         ants_conv_imaging = ants_imaging.new_image_like(np_conv_imaging)
         if save:
             ants_conv_imaging.to_file(path_imaging_conv)
+
         return ants_conv_imaging
 
 
@@ -80,6 +82,7 @@ def get_df_imaging_features(patient, imaging, df_mask=None, d_kernels=constants.
 
     if save and len(list_missing_kernels) != 0:
         df_features.to_parquet(str(path_imaging_features), engine="pyarrow")
+
     return df_features[list_cols]
 
 

@@ -1,4 +1,4 @@
-from relapse_prediction.constants import *
+from relapse_prediction import constants
 
 from torch.nn.functional import conv2d, conv3d
 import pandas as pd
@@ -17,7 +17,7 @@ def flatten_to_df(arr, col):
 # A patient's mask corresponds to the pre RT T1 imaging :
 def get_df_mask(patient):
 
-    path_prert_t1 = dir_processed / patient / "pre_RT" / "T1" / fr"{patient}_pre_RT_T1.nii.gz"
+    path_prert_t1 = constants.dir_processed / patient / "pre_RT" / "T1" / fr"{patient}_pre_RT_T1.nii.gz"
     ants_prert_t1 = ants.image_read(str(path_prert_t1))
     ants_mask = ants.get_mask(ants_prert_t1)
 

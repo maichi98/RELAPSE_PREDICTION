@@ -1,20 +1,21 @@
 from relapse_prediction import constants, features, utils
 
-import ants
+from concurrent.futures import ProcessPoolExecutor
+from tqdm import tqdm
+
+
+def process_patient(patient):
+
+    df_mask = utils.get_df_mask(patient)
+    for imaging in constants.L_IRM_MAPS:
+        df_imaging_features = features.get_df_imaging_features(patient, imaging, df_mask=df_mask)
+        print(f"Successfully generated features for patient : {patient} and imaging : {imaging}")
 
 
 def main():
-    for patient in constants.list_patients:
-        for imaging in constants.L_CERCARE_MAPS + constants.L_IRM_MAPS:
-            dir_imaging = constants.dir_processed / patient / "pre_RT" / imaging
 
-            df_mask = utils.get_df_mask(patient)
-
-            path_imaging = dir_imaging / f"{patient}_pre_RT_{imaging}.nii.gz"
-
-            ants_imaging = ants.image_read(str(path_imaging))
-
-            df_features = features.get_df_imaging_features(patient, imaging, df_mask, constants.D_KERNELS, ants_imaging=ants_imaging)
+    with ProcessPoolExecutor(max_workers=20) as executor:
+        executor.map(process_patient, constants.list_patients)
 
 
 if __name__ == "__main__":

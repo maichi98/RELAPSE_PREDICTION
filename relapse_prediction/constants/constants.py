@@ -3,6 +3,20 @@ import numpy as np
 import platform
 import os
 
+__all__ = [
+    "dir_root",
+    "dir_aidream_data",
+    "dir_processed",
+    "dir_features",
+    "dir_labels",
+    "dir_results",
+    "dir_thresholds",
+    "L_CERCARE_MAPS",
+    "L_IRM_MAPS",
+    "list_bad_patients",
+    "list_patients",
+    "D_KERNELS"
+]
 
 # Hard drive directory :
 dir_root = Path("/media/maichi/SSD-IGR") if platform.system() == "Linux" else Path("D:")
@@ -28,9 +42,6 @@ dir_results.mkdir(parents=True, exist_ok=True)
 # thresholds per patient directory :
 dir_thresholds = dir_results / "thresholds per patient"
 
-dir_new_thresholds = dir_results / "new thresholds per patient"
-dir_new_thresholds.mkdir(exist_ok=True)
-
 # List of cercare maps :
 L_CERCARE_MAPS = ["COV", "CTH", "Delay", "rCBV", "rLeakage", "OEF", "rCMRO2"]
 L_IRM_MAPS = ["T1CE", "T1", "FLAIR"]
@@ -40,7 +51,13 @@ list_bad_patients = {"AIDREAM_32", "AIDREAM_102", "AIDREAM_238"}
 list_patients = list(set(os.listdir(dir_processed)) - list_bad_patients)
 list_patients = [list_patients[i] for i in np.argsort([int(patient.strip("AIDREAM_")) for patient in list_patients])]
 
-D_KERNELS = {"mean_3x3"  : np.ones((3, 3))    /   9,
-             "mean_5x5"  : np.ones((5, 5))    /  25,
-             "mean_3x3x3": np.ones((3, 3, 3)) /  27,
-             "mean_5x5x5": np.ones((5, 5, 5)) / 125}
+D_KERNELS = {
+    "mean_3x3": np.ones((3, 3)) / 9,
+    "mean_5x5": np.ones((5, 5)) / 25,
+    "mean_3x3x3": np.ones((3, 3, 3)) / 27,
+    "mean_5x5x5": np.ones((5, 5, 5)) / 125
+}
+
+# D_KERNELS = {
+#     "mean_5x5x5": np.ones((5, 5, 5)) / 125
+# }
