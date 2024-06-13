@@ -58,6 +58,7 @@ list_patients = [list_patients[i] for i in np.argsort([int(patient.strip("AIDREA
 #    "mean_5x5x5": np.ones((5, 5, 5)) / 125
 #}
 
- D_KERNELS = {
+D_KERNELS = {
      "mean_5x5x5": np.ones((5, 5, 5)) / 125
 }
+
