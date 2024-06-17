@@ -1,9 +1,11 @@
 from relapse_prediction import utils, constants
 
+from concurrent.futures import ProcessPoolExecutor
+from tqdm.auto import tqdm
 import pandas as pd
 import numpy as np
+import argparse
 import ants
-import os
 
 
 def index_per_region(df, shape, new_shape):
@@ -59,7 +61,8 @@ def create_labels(patient):
 
     for label in ["L3R", "L3R - (L1 + L3)"]:
         df_index = df_labels[["x", "y", "z", "index_5x5x5", label]].copy()
-        _df_index = df_index.groupby("index_5x5x5").mean(label).reset_index()[["index_5x5x5", label]].rename(columns={label: f"{label}_5x5x5"})
+        _df_index = df_index.groupby("index_5x5x5").mean(label).reset_index()[["index_5x5x5", label]].rename(columns={
+            label: f"{label}_5x5x5"})
         df_index = df_index.merge(_df_index, on="index_5x5x5", how="left").drop(columns=(label))
         df_labels = df_labels.merge(df_index, on=["x", "y", "z", "index_5x5x5"], how="left")
         df_labels.loc[df_labels[f"{label}_5x5x5"] < 0.5, f"{label}_5x5x5"] = 0
@@ -67,3 +70,42 @@ def create_labels(patient):
 
     path_labels.parent.mkdir(exist_ok=True, parents=True)
     df_labels.to_parquet(path_labels, engine="pyarrow")
+
+
+# ------------------------------------------- Main functions -----------------------------------------------------------
+def main(list_patients):
+    for patient in tqdm(list_patients):
+        create_labels(patient)
+        print(f"Labels generated for patient: {patient} !")
+
+
+def process_patient(patient):
+    create_labels(patient)
+    print(f"Labels generated for patient: {patient} !")
+
+
+def main_mp(list_patients, num_workers):
+
+    with ProcessPoolExecutor(max_workers=num_workers) as executor:
+        executor.map(process_patient, list_patients)
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description="Generate Labels")
+
+    parser.add_argument('--start', type=int, default=0,
+                        help='start index of the list of patients')
+    parser.add_argument('--end', type=int, default=len(constants.list_patients),
+                        help='end index of the list of patients')
+    parser.add_argument('--mp', action='store_true', default=False,
+                        help='Use multiprocessing ?')
+    parser.add_argument('--num_workers', type=int, default=10,
+                        help='number of CPU workers')
+
+    args = parser.parse_args()
+
+    if not args.mp:
+        main(constants.list_patients[args.start: args.end])
+    else:
+        main_mp(constants.list_patients[args.start: args.end], args.num_workers)
