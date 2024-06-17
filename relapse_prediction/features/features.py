@@ -1,103 +1,109 @@
-from relapse_prediction import constants
-from relapse_prediction import utils
+from relapse_prediction import constants, utils
 
-from scipy import stats
+from concurrent.futures import ProcessPoolExecutor
 import pandas as pd
+import argparse
 import ants
-import glob
-import os
 
 
-def get_imaging_conv(patient, imaging, id_kernel, kernel, save=True, **kwargs):
-    dir_imaging = constants.dir_processed / patient / "pre_RT" / imaging
+def create_features(patient: str, imaging: str, **kwargs):
+    """
+    Create features for a given patient and imaging.
 
-    dir_imaging_conv = dir_imaging / "convs"
-    dir_imaging_conv.mkdir(exist_ok=True)
+    This function generates features by convolving the imaging data with a set of kernels.
+    The features are then flattened to a DataFrame and merged with the mask DataFrame.
+    If features already exist, they are read from a parquet file.
+    If any kernels are missing from the existing features, the imaging is convolved with these kernels,
+    and the resulting features are added to the DataFrame, which is then saved.
 
-    path_imaging_conv = dir_imaging_conv / fr"{patient}_{imaging}_{id_kernel}.nii.gz"
+    Parameters:
+    -----------
+    patient : (str)
+        The patient's name or ID.
 
-    if path_imaging_conv.exists():
-        return ants.image_read(str(path_imaging_conv))
-    else:
-        if "ants_imaging" in kwargs.keys():
-            ants_imaging = kwargs["ants_imaging"]
-        elif "path_imaging" in kwargs.keys():
-            ants_imaging = ants.image_read(str(kwargs["path_imaging"]))
-        else:
+    imaging : (str)
+        The imaging sequence's name or ID.
 
-            path_imaging = dir_imaging / fr"{patient}_pre_RT_{imaging}.nii.gz"
-            ants_imaging = ants.image_read(str(path_imaging))
+    **kwargs : (dict)
+        Additional arguments.
 
-        np_conv_imaging = utils.convolve(ants_imaging.numpy(), kernel)
+    """
 
-        ants_conv_imaging = ants_imaging.new_image_like(np_conv_imaging)
-        if save:
-            ants_conv_imaging.to_file(path_imaging_conv)
+    dir_patient = constants.dir_features / patient
+    dir_patient.mkdir(exist_ok=True, parents=True)
+    path_features = dir_patient / fr"{patient}_{imaging}_features.parquet"
 
-        return ants_conv_imaging
-
-
-def get_df_imaging_features(patient, imaging, df_mask=None, d_kernels=constants.D_KERNELS, save=True, **kwargs):
-
-    # df_imaging_features columns :
-    list_base_cols = ["x", "y", "z", imaging]
-    list_kernels = list(d_kernels.keys())
-    list_cols = list_base_cols + list_kernels
-
-    # patient features directory:
-    dir_patient_features = constants.dir_features / patient
-    dir_patient_features.mkdir(exist_ok=True)
-
-    path_imaging_features = dir_patient_features / f"{patient}_{imaging}_features.parquet"
-
-    if path_imaging_features.exists():
-
-        df_features = pd.read_parquet(str(path_imaging_features), engine="pyarrow")
-        return df_features[list_cols]
-
-        # n_missing_base_cols = len(set(list_base_cols) - set(df_features.columns))
-        # if n_missing_base_cols > 0:
-        #     raise ValueError(f"{path_imaging_features} has missing base columns ! ")
-
-    else:
-        if "ants_imaging" in kwargs.keys():
-            ants_imaging = kwargs["ants_imaging"]
-        elif "path_imaging" in kwargs.keys():
-            ants_imaging = ants.image_read(str(kwargs["path_imaging"]))
-        else:
-            path_imaging = constants.dir_processed / patient / "pre_RT" / imaging / f"{patient}_pre_RT_{imaging}.nii.gz"
-            ants_imaging = ants.image_read(str(path_imaging))
-
+    if not path_features.exists():
+        path_imaging = constants.dir_processed / patient / "pre_RT" / imaging / fr"{patient}_pre_RT_{imaging}.nii.gz"
+        ants_imaging = ants.image_read(str(path_imaging))
         _df_features = utils.flatten_to_df(ants_imaging.numpy(), imaging)
-        df_features = df_mask.copy()
+        df_features = utils.get_df_mask(patient)
         df_features = df_features.merge(_df_features, on=["x", "y", "z"], how="left")
+    else:
+        df_features = pd.read_parquet(path_features, engine="pyarrow")
 
-    list_missing_kernels = list(set(list_kernels) - set(df_features.columns))
+    if "dict_kernels" in kwargs.keys():
+        dict_kernels = kwargs["dict_kernels"]
+    else:
+        dict_kernels = constants.D_KERNELS
+
+    list_kernels = list(dict_kernels.keys())
+    list_kernel_cols = [col.lstrip(f"{imaging}_") for col in df_features.columns if col.startswith(f"{imaging}_")]
+    list_missing_kernels = list(set(list_kernels) - set(list_kernel_cols))
 
     for id_kernel in list_missing_kernels:
-        kernel = d_kernels[id_kernel]
-        ants_conv_feature = get_imaging_conv(patient, imaging, id_kernel, kernel, save)
-        _df_features = utils.flatten_to_df(ants_conv_feature.numpy(), id_kernel)
+        kernel = dict_kernels[id_kernel]
+        ants_conv_feature = utils.get_convolved_imaging(patient, imaging, id_kernel, kernel, save=True)
+        _df_features = utils.flatten_to_df(ants_conv_feature.numpy(), f"{imaging}_{id_kernel}")
         df_features = df_features.merge(_df_features, on=["x", "y", "z"], how='left')
 
-    if save and len(list_missing_kernels) != 0:
-        df_features.to_parquet(str(path_imaging_features), engine="pyarrow")
-
-    return df_features[list_cols]
+    if len(list_missing_kernels) != 0:
+        df_features.to_parquet(str(path_features), engine="pyarrow")
 
 
-def get_df_features(patient):
-    df_features = pd.DataFrame()
+# ---------------------------------------------- Main functions --------------------------------------------------------
+def main(list_images: list, list_patients: list):
 
-    for pq_features in glob.glob(os.path.join(constants.dir_features, patient, f"{patient}_*_features.parquet")):
-        imaging = os.path.basename(pq_features).removeprefix(f"{patient}_").removesuffix("_features.parquet")
+    for patient in list_patients:
+        for imaging in list_images:
+            create_features(patient, imaging)
+            print(f"Features generated for patient: {patient} for the imaging {imaging} !")
 
-        _df_features = pd.read_parquet(pq_features, engine="pyarrow")
 
-        L_cols_to_rename = list(set(_df_features.columns) - {"x", "y", "z", imaging})
-        _df_features = _df_features.rename(columns={col: f"{imaging}_{col}" for col in L_cols_to_rename})
+def process_patient_imaging(pair):
+    patient, imaging = pair
+    create_features(patient, imaging)
+    print(f"Features generated for patient: {patient} for the imaging {imaging} !")
 
-        df_features = _df_features.copy() if df_features.empty else df_features.merge(_df_features, on=["x", "y", "z"],
-                                                                                      how="left")
 
-    return df_features
+def main_mp(list_images: list, list_patients: list, num_workers):
+
+    with ProcessPoolExecutor(max_workers=num_workers) as executor:
+        pairs = [(patient, imaging) for patient in list_patients for imaging in list_images]
+        executor.map(process_patient_imaging, pairs)
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description="Generate MRI features")
+
+    parser.add_argument('--maps', nargs='+', default=constants.L_IRM_MAPS + constants.L_CERCARE_MAPS,
+                        help='list of feature sequences')
+    parser.add_argument('--start', type=int, default=0,
+                        help='start index of the list of patients')
+    parser.add_argument('--end', type=int, default=len(constants.list_patients),
+                        help='end index of the list of patients')
+    parser.add_argument('--mp', action='store_true', default=False,
+                        help='use multiprocessing')
+    parser.add_argument('--num_workers', type=int, default=8,
+                        help='number of workers')
+
+    args = parser.parse_args()
+
+    if not args.mp:
+        main(list_images=args.maps,
+             list_patients=constants.list_patients[args.start: args.end])
+    else:
+        main_mp(list_images=args.maps,
+                list_patients=constants.list_patients[args.start: args.end],
+                num_workers=args.num_workers)
