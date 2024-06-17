@@ -16,7 +16,7 @@ def create_cercare_roc(patient, imaging, label, feature):
     fpr, tpr, thresholds = roc_curve(df_data[label], df_data[feature_col])
     d_res = {"fpr": fpr, "tpr": tpr, "thresholds": thresholds}
 
-    path_roc_results = constants.dir_results / "thresholds per patient" / patient / f"{feature_col}.pickle"
+    path_roc_results = constants.dir_results / "thresholds per patient" / patient / label / f"{feature_col}.pickle"
     path_roc_results.parent.mkdir(parents=True, exist_ok=True)
 
     with open(path_roc_results, "wb") as f:
