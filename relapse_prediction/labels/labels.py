@@ -20,67 +20,50 @@ def index_per_region(df, shape, new_shape):
     return df_reindex[["x", "y", "z", name_col]]
 
 
-def get_df_labels(patient, df_mask=None, save=True, **kwargs):
+def get_df_labels(patient, label):
+    
+    path_labels = constants.dir_labels / f"{patient}_labels.parquet"
+    if not path_labels.exists():
+        create_labels(patient)
+
+    return pd.read_parquet(path_labels, engine="pyarrow")[['x', 'y', 'z', label]]
+
+
+def create_labels(patient):
     path_labels = constants.dir_labels / f"{patient}_labels.parquet"
 
-    if path_labels.exists():
-        return pd.read_parquet(str(path_labels), engine="pyarrow")
+    df_mask = utils.get_df_mask(patient)
 
-    else:
-        # Load selected labels :
-        d_labels = [
-            ('pre_RT', 'L1', 'L1'),
-            ('pre_RT', 'L2', 'L2'),
-            ('pre_RT', 'L3', 'L3'),
-            ('pre_RT', 'L4', 'L4'),
-            ('pre_RT', 'L5', 'L5'),
-            ('Rechute', 'L3', 'L3R')
-        ]
+    dict_labels = [
+        ("pre_RT", "L1", "L1"),
+        ("pre_RT", "L3", "L3"),
+        ("Rechute", "L3", "L3R")
+    ]
+    df_labels = df_mask.copy()
+    for stage, lbl, label in dict_labels:
+        path_label = constants.dir_processed / patient / stage / "Labels" / f"{patient}_{stage}_{lbl}_Label.nii.gz"
+        ants_label = ants.image_read(str(path_label))
 
-        df_labels = df_mask.copy()
+        df_label = utils.flatten_to_df(ants_label.numpy(), label)
+        df_labels = df_labels.merge(df_label, on=["x", "y", "z"], how="left")
 
-        for (stage, label, label_name) in d_labels:
-            path_label = constants.dir_processed / patient / stage / "Labels" / f"{patient}_{stage}_{label}_Label.nii.gz"
-            ants_label = ants.image_read(str(path_label))
+    # Create L3R - (L1 + L3) label :
+    df_labels["L3R - (L1 + L3)"] = df_labels["L3R"] - df_labels["L1"] - df_labels["L3"]
+    df_labels.loc[df_labels["L3R - (L1 + L3)"] < 0, "L3R - (L1 + L3)"] = 0
 
-            df_label = utils.flatten_to_df(ants_label.numpy(), label_name)
-            df_labels = df_labels.merge(df_label, on=['x', 'y', 'z'], how="left")
+    # add index_5x5x5 : 
+    new_shape = (48, 48, 31)
+    df_index = index_per_region(df_mask, (240, 240, 155), new_shape)
+    df_index.rename(columns={"index_48x48x31": "index_5x5x5"}, inplace=True)
+    df_labels = df_labels.merge(df_index, on=['x', 'y', 'z'], how="left")
 
-        # create L3R - (L1 + L3) label :
-        df_labels["L3R - (L1 + L3)"] = df_labels["L3R"] - df_labels["L1"] - df_labels["L3"]
-        df_labels.loc[df_labels["L3R - (L1 + L3)"] < 0, "L3R - (L1 + L3)"] = 0
+    for label in ["L3R", "L3R - (L1 + L3)"]:
+        df_index = df_labels[["x", "y", "z", "index_5x5x5", label]].copy()
+        _df_index = df_index.groupby("index_5x5x5").mean(label).reset_index()[["index_5x5x5", label]].rename(columns={label: f"{label}_5x5x5"})
+        df_index = df_index.merge(_df_index, on="index_5x5x5", how="left").drop(columns=(label))
+        df_labels = df_labels.merge(df_index, on=["x", "y", "z", "index_5x5x5"], how="left")
+        df_labels.loc[df_labels[f"{label}_5x5x5"] < 0.5, f"{label}_5x5x5"] = 0
+        df_labels.loc[df_labels[f"{label}_5x5x5"] >= 0.5, f"{label}_5x5x5"] = 1
 
-        # create (L1 + L3) label :
-        df_labels["(L1 + L3)"] = df_labels["L1"] + df_labels["L3"]
-        df_labels.loc[df_labels["(L1 + L3)"] > 1, "(L1 + L3)"] = 1
-
-        # create (L4 + L5) label :
-        df_labels["(L4 + L5)"] = df_labels["L4"] + df_labels["L5"]
-        df_labels.loc[df_labels["(L4 + L5)"] > 1, "(L4 + L5)"] = 1
-
-        # Add index_5x5x5 :
-        new_shape = (48, 48, 31)
-
-        df_index = index_per_region(df_mask, (240, 240, 155), new_shape)
-
-        df_index.rename(columns={"index_48x48x31": "index_5x5x5"}, inplace=True)
-
-        df_labels = df_labels.merge(df_index, on=['x', 'y', 'z'], how="left")
-
-        for label in ["L3R", "L3R - (L1 + L3)", "(L1 + L3)", "L2", "L3", "L4", "L5", "(L4 + L5)"]:
-            name_index_col, name_mean_col = f"index_5x5x5", f"mean_{label}_5x5x5"
-
-            df_index = df_labels[["x", "y", "z", "index_5x5x5", label]].copy()
-
-            _df_index = df_index.groupby(name_index_col).mean(label).reset_index()[[name_index_col, label]].rename(
-                columns={label: name_mean_col})
-
-            df_index = df_index.merge(_df_index, on=name_index_col, how="left").drop(columns=(label))
-
-            df_labels = df_labels.merge(df_index, on=["x", "y", "z", name_index_col], how="left")
-
-        if save:
-            if not os.path.exists(constants.dir_labels):
-                os.makedirs(constants.dir_labels)
-            df_labels.to_parquet(str(path_labels), engine="pyarrow")
-        return df_labels
+    path_labels.parent.mkdir(exist_ok=True, parents=True)
+    df_labels.to_parquet(path_labels, engine="pyarrow")

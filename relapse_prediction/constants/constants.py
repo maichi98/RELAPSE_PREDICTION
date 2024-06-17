@@ -15,11 +15,12 @@ __all__ = [
     "L_IRM_MAPS",
     "list_bad_patients",
     "list_patients",
-    "D_KERNELS"
+    "D_KERNELS",
+    "dict_cercare_p"
 ]
 
 # Hard drive directory :
-dir_root = Path("/media/maichi/SSD-IGR") if platform.system() == "Linux" else Path("E:")
+dir_root = Path("/media/maichi/SSD-IGR") if platform.system() == "Linux" else Path("D:")
 
 # AIDREAM_DATA directory :
 dir_aidream_data = dir_root / "AIDREAM_DATA"
@@ -62,3 +63,7 @@ D_KERNELS = {
      "mean_5x5x5": np.ones((5, 5, 5)) / 125
 }
 
+dict_cercare_p = {
+    "COV": 2, "CTH": 2, "Delay": 2, "rCBV": 2,
+    "rLeakage": 1, "OEF": 3, "rCMRO2": 2
+}

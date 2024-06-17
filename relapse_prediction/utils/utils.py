@@ -1,6 +1,7 @@
 from relapse_prediction import constants
 
 from torch.nn.functional import conv2d, conv3d
+from scipy import stats
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
@@ -57,4 +58,38 @@ def get_list_imaging_features(imaging, feature):
     return list_features
 
 
-        
+def get_convolved_imaging(patient, imaging, id_kernel, kernel, save=True):
+    dir_imaging = constants.dir_processed / patient / "pre_RT" / imaging
+
+    dir_imaging_conv = dir_imaging / "convs"
+    dir_imaging_conv.mkdir(exist_ok=True)
+
+    path_imaging_conv = dir_imaging_conv / fr"{patient}_{imaging}_{id_kernel}.nii.gz"
+
+    if path_imaging_conv.exists():
+        return ants.image_read(str(path_imaging_conv))
+    else:
+        path_imaging = dir_imaging / fr"{patient}_pre_RT_{imaging}.nii.gz"
+        ants_imaging = ants.image_read(str(path_imaging))
+        np_conv_imaging = utils.convolve(ants_imaging.numpy(), kernel)
+        ants_conv_imaging = ants_imaging.new_image_like(np_conv_imaging)
+        if save:
+            ants_conv_imaging.to_file(path_imaging_conv)
+
+        return ants_conv_imaging
+
+
+def normalize(s, norm):
+
+    if norm == "max":
+        max_value = s.max()
+        return s / max_value
+    
+    if norm == "min_max":
+        min_value, max_value = s.min(), s.max()
+        return (s - min_value) / (max_value - min_value)
+
+    if norm == "z_score":
+        return stats.zscore(s)
+
+    raise ValueError(f"{norm} must be either, min_max, max, or z_score !")

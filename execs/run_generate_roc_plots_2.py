@@ -12,7 +12,7 @@ import os
 def process_patient_label_imaging_feature(patient, label, imaging, feature):
 
     path_labels = constants.dir_labels / f"{patient}_labels.parquet"
-    df_labels = path_labels = pd.read_parquet(path_labels, engine="pyarrow")
+    df_labels = pd.read_parquet(path_labels, engine="pyarrow")
     df_labels = df_labels[["x", "y", "z", label]]
 
     path_features = constants.dir_features / patient / fr"{patient}_{imaging}_features.parquet"
