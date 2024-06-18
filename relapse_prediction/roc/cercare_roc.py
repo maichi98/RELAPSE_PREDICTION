@@ -1,7 +1,9 @@
-from relapse_prediction import features, labels, constants
+from relapse_prediction.roc.roc import create_roc
+from relapse_prediction import features, labels
+from relapse_prediction import constants
 
-from sklearn.metrics import roc_curve, auc
-import pickle
+from concurrent.futures import ProcessPoolExecutor
+import argparse
 
 
 def create_cercare_roc(patient, imaging, label, feature):
@@ -13,31 +15,65 @@ def create_cercare_roc(patient, imaging, label, feature):
     feature_col = f"{imaging}_{feature}" if feature is not None else imaging
     feature_col = f"{feature_col}_quantized"
 
-    fpr, tpr, thresholds = roc_curve(df_data[label], df_data[feature_col])
-    d_res = {"fpr": fpr, "tpr": tpr, "thresholds": thresholds}
+    create_roc(df_data, patient, label, feature_col)
 
-    path_roc_results = constants.dir_results / "thresholds per patient" / patient / label / f"{feature_col}.pickle"
-    path_roc_results.parent.mkdir(parents=True, exist_ok=True)
 
-    with open(path_roc_results, "wb") as f:
-        pickle.dump(d_res, f)
+# ------------------------------------------------ Main functions ------------------------------------------------------
+def main(list_mri_maps, list_labels, list_patients, feature):
 
-    # AUC value :
-    roc_auc = auc(fpr, tpr)
-    dir_save = constants.dir_results / "ROC per patient" / label / imaging / feature_col
-    dir_save.mkdir(exist_ok=True, parents=True)
+    for patient in list_patients:
+        for imaging in list_mri_maps:
+            for label in list_labels:
 
-    import matplotlib.pyplot as plt
+                create_cercare_roc(patient, imaging, label, feature)
+                print(f"ROC generated for patient {patient}, label {label}, imaging {imaging} feature {feature} !")
 
-    plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % roc_auc)
-    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-    plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.05])
 
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title(f'ROC curve for {patient}, label: {label}, feature: {feature_col}')
-    plt.legend(loc="lower right")
+def process_patient_imaging_label(tpl):
+    patient, imaging, label, feature = tpl
+    create_cercare_roc(patient, imaging, label, feature)
+    print(f"ROC generated for patient {patient}, label {label}, imaging {imaging} feature {feature} !")
 
-    plt.savefig(str(dir_save / f"{patient}.png"), dpi=300)
-    plt.clf()
+
+def main_mp(list_mri_maps, list_labels, list_patients, feature, num_workers):
+
+    with ProcessPoolExecutor(max_workers=num_workers) as executor:
+        pairs = [(patient, imaging, label, feature)
+                 for patient in list_patients
+                 for imaging in list_mri_maps
+                 for label in list_labels]
+        executor.map(process_patient_imaging_label, pairs)
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description='Create ROC curve for Cercare features')
+
+    parser.add_argument('--cercare_maps', nargs='+', default=constants.L_CERCARE_MAPS,
+                        help='list of Cercare images')
+    parser.add_argument('--labels', nargs='+',
+                        default=["L3R", "L3R_5x5x5", "L3R - (L1 + L3)", "L3R - (L1 + L3)_5x5x5"], help='list of Labels')
+    parser.add_argument('--feature', default=None,
+                        help="choice of feature")
+    parser.add_argument('--start', type=int, default=0,
+                        help='start index of the list of patients')
+    parser.add_argument('--end', type=int, default=len(constants.list_patients),
+                        help='end index of the list of patients')
+    parser.add_argument('--mp', action='store_true', default=False,
+                        help='Use multiprocessing ?')
+    parser.add_argument('--num_workers', type=int, default=10,
+                        help='number of CPU workers')
+
+    args = parser.parse_args()
+
+    if not args.mp:
+        main(list_mri_maps=args.cercare_maps,
+             list_labels=args.labels,
+             list_patients=constants.list_patients[args.start: args.end],
+             feature=args.feature)
+    else:
+        main_mp(list_mri_maps=args.cercare_maps,
+                list_labels=args.labels,
+                list_patients=constants.list_patients[args.start: args.end],
+                feature=args.feature,
+                num_workers=args.num_workers)
