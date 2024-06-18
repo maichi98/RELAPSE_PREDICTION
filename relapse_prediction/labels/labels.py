@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import argparse
 import ants
+import os
 
 
 def index_per_region(df, shape, new_shape):
@@ -100,7 +101,7 @@ if __name__ == "__main__":
                         help='end index of the list of patients')
     parser.add_argument('--mp', action='store_true', default=False,
                         help='Use multiprocessing ?')
-    parser.add_argument('--num_workers', type=int, default=10,
+    parser.add_argument('--num_workers', type=int, default=os.cpu_count(),
                         help='number of CPU workers')
 
     args = parser.parse_args()

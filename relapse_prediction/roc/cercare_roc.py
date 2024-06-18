@@ -4,6 +4,7 @@ from relapse_prediction import constants
 
 from concurrent.futures import ProcessPoolExecutor
 import argparse
+import os
 
 
 def create_cercare_roc(patient, imaging, label, feature):
@@ -61,7 +62,7 @@ if __name__ == "__main__":
                         help='end index of the list of patients')
     parser.add_argument('--mp', action='store_true', default=False,
                         help='Use multiprocessing ?')
-    parser.add_argument('--num_workers', type=int, default=10,
+    parser.add_argument('--num_workers', type=int, default=os.cpu_count(),
                         help='number of CPU workers')
 
     args = parser.parse_args()

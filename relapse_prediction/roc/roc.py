@@ -34,8 +34,3 @@ def create_roc(df_data, patient, label, feature_col):
 
     plt.savefig(str(dir_save / f"{patient}.png"), dpi=300)
     plt.clf()
-
-
-
-
-
