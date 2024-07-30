@@ -4,6 +4,7 @@ from concurrent.futures import ProcessPoolExecutor
 import pandas as pd
 import argparse
 import ants
+import os
 
 
 def create_features(patient: str, imaging: str, **kwargs):
@@ -85,7 +86,7 @@ def main_mp(list_images: list, list_patients: list, num_workers):
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description="Generate MRI features")
+    parser = argparse.ArgumentParser(description="Generate features")
 
     parser.add_argument('--maps', nargs='+', default=constants.L_IRM_MAPS + constants.L_CERCARE_MAPS,
                         help='list of feature sequences')
@@ -95,7 +96,7 @@ if __name__ == "__main__":
                         help='end index of the list of patients')
     parser.add_argument('--mp', action='store_true', default=False,
                         help='use multiprocessing')
-    parser.add_argument('--num_workers', type=int, default=8,
+    parser.add_argument('--num_workers', type=int, default=os.cpu_count(),
                         help='number of workers')
 
     args = parser.parse_args()
