@@ -1,44 +1,94 @@
+from relapse_prediction.total_roc.total_roc import (get_list_thresholds,
+                                                    get_all_fpr_tpr,
+                                                    plot_total_roc,
+                                                    print_cutoff
+                                                    )
 from relapse_prediction import constants
 
-import pickle
+from concurrent.futures import ProcessPoolExecutor
+from datetime import datetime
+import argparse
+import time
+import os
 
 
-def get_list_mri_thresholds(imaging, label, feature, norm):
-
-    feature_col = f"{imaging}_{feature}" if feature is not None else imaging
-    feature_col = f"{feature}_{norm}_normalized"
-
-    list_thresholds = set()
-
-    for patient in constants.list_patients:
-
-        path_thresholds = constants.dir_thresholds / patient / f"{feature_col}.pickle"
-        with open(path_thresholds, "rb") as f:
-            dict_thresholds = pickle.load(f)
-        list_thresholds = list_thresholds.union(set(dict_thresholds["thresholds"]))
-
-    return sorted(list(list_thresholds))
-
-
-def load_mri_threshold_dataframe(patient, imaging, label, feature, norm):
+def create_mri_total_roc(imaging, label, feature, norm, file):
 
     feature_col = f"{imaging}_{feature}" if feature is not None else imaging
-    feature_col = f"{feature}_{norm}_normalized"
+    feature_col = f"{feature_col}_{norm}_normalized"
 
-    path_thresholds = constants.dir_thresholds / patient / f"{feature_col}.pickle"
-    with open(path_thresholds, "rb") as f:
-        dict_thresholds = pickle.load(f)
+    list_thresholds = get_list_thresholds(label, feature_col)
+    dict_fpr_tpr = get_all_fpr_tpr(label, feature_col, list_thresholds)
+    plot_total_roc(label, feature_col, dict_fpr_tpr)
+    print_cutoff(label, feature_col, dict_fpr_tpr, file)
 
-    path_labels = constants.dir_labels / f"{patient}_labels.parquet"
-    df_labels = pd.read_parquet(path_labels, engine="pyarrow")
-    total_positives = len(df_labels[df_labels[label] == 1])
-    total_negatives = len(df_labels[df_labels[label] == 0])
 
-    df_thresholds = pd.DataFrame(columns=["thresholds", "TP", "FP"])
+def main(list_mri_maps, list_labels, list_features, list_norms):
 
-    df_thresholds["thresholds"] = dict_thresholds["thresholds"]
+    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    df_thresholds["TP"] = dict_thresholds["tpr"] * total_positives
-    df_thresholds["FP"] = dict_thresholds["fpr"] * total_negatives
+    file = open(constants.dir_results / "total_roc" / fr"IRM_results_{current_time}", "w")
 
-    return df_thresholds, total_positives, total_negatives
+    for imaging in list_mri_maps:
+        for label in list_labels:
+            for feature in list_features:
+                for norm in list_norms:
+
+                    create_mri_total_roc(imaging, label, feature, norm, file)
+                    print(f"Total ROC generated for imaging {imaging}, label {label}, feature {feature}, norm {norm} !")
+
+    file.close()
+
+
+def process_imaging_label(tpl):
+    imaging, label, feature, norm, file = tpl
+    create_mri_total_roc(imaging, label, feature, norm, file)
+    print(f"Total ROC generated for imaging {imaging}, label {label}, feature {feature}, norm {norm} !")
+
+
+def main_mp(list_mri_maps, list_labels, list_features, list_norms,  num_workers):
+
+    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    file = open(constants.dir_results / "total_roc" / fr"IRM_results_{current_time}", "w")
+
+    with ProcessPoolExecutor(max_workers=num_workers) as executor:
+        pairs = [(imaging, label, feature, norm, file)
+                 for imaging in list_mri_maps
+                 for label in list_labels
+                 for feature in list_features
+                 for norm in list_norms]
+        executor.map(process_patient_imaging_label, pairs)
+
+    file.close()
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description='Create Total ROC curve for MRI features')
+
+    parser.add_argument('--mri_maps', nargs='+', default=constants.L_IRM_MAPS,
+                        help='list of MRI images')
+    parser.add_argument('--labels', nargs='+',
+                        default=["L3R", "L3R_5x5x5", "L3R - (L1 + L3)", "L3R - (L1 + L3)_5x5x5"], help='list of Labels')
+    parser.add_argument('--features', default=[None, 'mean_5x5x5'], nargs='+',
+                        help="choice of feature")
+    parser.add_argument('--norms', type=str, default=['z_score', 'min_max', 'max'],
+                        help='normalization method of the features')
+    parser.add_argument('--mp', action='store_true', default=False,
+                        help='Use multiprocessing ?')
+    parser.add_argument('--num_workers', type=int, default=os.cpu_count(),
+                        help='number of CPU workers')
+
+    args = parser.parse_args()
+
+    if not args.mp:
+        main(list_mri_maps=args.mri_maps,
+             list_labels=args.labels,
+             list_features=args.features,
+             list_norms=args.norms)
+    else:
+        main_mp(list_mri_maps=args.mri_maps,
+                list_labels=args.labels,
+                list_features=args.features,
+                list_norms=args.norms,
+                num_workers=args.num_workers)
