@@ -141,23 +141,21 @@ def compute_cutoff_youden(fpr, tpr, thresholds, inverted=False):
     # Find the index of the point that maximizes the Youden index :
     idx_max = np.argmax(youden)
     # Return the corresponding threshold :
-    return thresholds[idx_max]
+    return thresholds[idx_max], fpr[idx_max], tpr[idx_max]
 
 
-def print_cutoff(label, imaging, feature, dict_fpr_tpr):
+def print_cutoff(label, imaging, feature, dict_fpr_tpr, filename):
 
     tpr = np.array(dict_fpr_tpr["tpr"])
     fpr = np.array(dict_fpr_tpr["fpr"])
     thresholds = dict_fpr_tpr["thresholds"]
 
-    cutoff = compute_cutoff_youden(fpr, tpr, thresholds, inverted=False)
+    cutoff, fpr_val, tpr_val = compute_cutoff_youden(fpr, tpr, thresholds, inverted=False)
 
-    txt = f"Cutoff value for label={label}, imaging={imaging}, feature={feature}: {cutoff}"
+    txt = f"Label={label}, Feature={feature_col}: Cutoff :  {cutoff}, Recall : {tpr_val}, Specificity : {1 - fpr_val}"
 
-    with open(constants.dir_results / "total cutoffs.txt", "a+") as f:
+    with open(constants.dir_results / fr"{filename}.txt", "w") as f:
         f.write(txt + "\n")
-
-    print(f"Cutoff value for label={label}, imaging={imaging}, feature={feature}", cutoff)
 
 
 def main():
