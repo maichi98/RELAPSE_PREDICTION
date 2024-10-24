@@ -39,12 +39,15 @@ def create_labels(patient):
 
     dict_labels = [
         ("pre_RT", "L1", "L1"),
+        ("pre_RT", "L2", "L2"),
         ("pre_RT", "L3", "L3"),
-        ("Rechute", "L3", "L3R")
+        ("pre_RT", "L4", "L4"),
+        ("pre_RT", "L5", "L5"),
+        ("Rechute", "L3R", "L3R")
     ]
     df_labels = df_mask.copy()
     for stage, lbl, label in dict_labels:
-        path_label = constants.dir_processed / patient / stage / "Labels" / f"{patient}_{stage}_{lbl}_Label.nii.gz"
+        path_label = constants.dir_processed / patient / stage / "Labels" / f"{patient}_{stage}_{lbl}.nii.gz"
         ants_label = ants.image_read(str(path_label))
 
         df_label = utils.flatten_to_df(ants_label.numpy(), label)
@@ -60,7 +63,7 @@ def create_labels(patient):
     df_index.rename(columns={"index_48x48x31": "index_5x5x5"}, inplace=True)
     df_labels = df_labels.merge(df_index, on=['x', 'y', 'z'], how="left")
 
-    for label in ["L3R", "L3R - (L1 + L3)"]:
+    for label in ["L3R", "L3R - (L1 + L3)", "L1", "L2", "L3", "L4", "L5"]:
         df_index = df_labels[["x", "y", "z", "index_5x5x5", label]].copy()
         _df_index = df_index.groupby("index_5x5x5").mean(label).reset_index()[["index_5x5x5", label]].rename(columns={
             label: f"{label}_5x5x5"})

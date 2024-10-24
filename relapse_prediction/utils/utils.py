@@ -71,7 +71,7 @@ def get_convolved_imaging(patient, imaging, id_kernel, kernel, save=True):
     else:
         path_imaging = dir_imaging / fr"{patient}_pre_RT_{imaging}.nii.gz"
         ants_imaging = ants.image_read(str(path_imaging))
-        np_conv_imaging = utils.convolve(ants_imaging.numpy(), kernel)
+        np_conv_imaging = convolve(ants_imaging.numpy(), kernel)
         ants_conv_imaging = ants_imaging.new_image_like(np_conv_imaging)
         if save:
             ants_conv_imaging.to_file(path_imaging_conv)

@@ -57,7 +57,7 @@ def main_mp(list_mri_maps, list_labels, list_features, list_norms,  num_workers)
                  for label in list_labels
                  for feature in list_features
                  for norm in list_norms]
-        executor.map(process_patient_imaging_label, pairs)
+        executor.map(process_imaging_label, pairs)
 
     file.close()
 

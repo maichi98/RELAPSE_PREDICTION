@@ -55,7 +55,7 @@ def main_mp(list_cercare_maps, list_labels, list_features,  num_workers):
                  for imaging in list_cercare_maps
                  for label in list_labels
                  for feature in list_features]
-        executor.map(process_patient_imaging_label, pairs)
+        executor.map(process_imaging_label, pairs)
 
     file.close()
 
@@ -66,12 +66,18 @@ if __name__ == "__main__":
 
     parser.add_argument('--cercare_maps', nargs='+', default=constants.L_CERCARE_MAPS,
                         help='list of Cercare images')
+
     parser.add_argument('--labels', nargs='+',
-                        default=["L3R", "L3R_5x5x5", "L3R - (L1 + L3)", "L3R - (L1 + L3)_5x5x5"], help='list of Labels')
+                        default=["L3R", "L3R_5x5x5", "L3R - (L1 + L3)", "L3R - (L1 + L3)_5x5x5",
+                                 "L1", "L1_5x5x5", "L2", "L2_5x5x5", "L3", "L3_5x5x5",
+                                 "L4", "L4_5x5x5", "L5", "L5_5x5x5"], help='list of Labels')
+
     parser.add_argument('--features', default=[None, 'mean_5x5x5'], nargs='+',
                         help="choice of feature")
+
     parser.add_argument('--mp', action='store_true', default=False,
                         help='Use multiprocessing ?')
+
     parser.add_argument('--num_workers', type=int, default=os.cpu_count(),
                         help='number of CPU workers')
 

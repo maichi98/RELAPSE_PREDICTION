@@ -13,20 +13,19 @@ __all__ = [
     "dir_thresholds",
     "L_CERCARE_MAPS",
     "L_IRM_MAPS",
-    "list_bad_patients",
     "list_patients",
     "D_KERNELS",
     "dict_cercare_p"
 ]
 
 # Hard drive directory :
-dir_root = Path("/media/maichi/SSD-IGR") if platform.system() == "Linux" else Path("D:")
+dir_root = Path("/media/maichi/T7") if platform.system() == "Linux" else Path("D:")
 
 # AIDREAM_DATA directory :
-dir_aidream_data = dir_root / "AIDREAM_DATA"
+dir_aidream_data = dir_root / "PERFUSION_DATA"
 
 # processed imaging directory :
-dir_processed = dir_aidream_data / "processed"
+dir_processed = dir_aidream_data / "PROCESSED"
 
 # features directory :
 dir_features = dir_aidream_data / "features"
@@ -48,16 +47,10 @@ L_CERCARE_MAPS = ["COV", "CTH", "Delay", "rCBV", "rLeakage", "OEF", "rCMRO2"]
 L_IRM_MAPS = ["T1CE", "T1", "FLAIR"]
 
 # List of AIDREAM patients :
-list_bad_patients = {"AIDREAM_32", "AIDREAM_102", "AIDREAM_238", "AIDREAM_152"}
+list_bad_patients = {"AIDREAM_133", "AIDREAM_201", 'AIDREAM_102,'}
 list_patients = list(set(os.listdir(dir_processed)) - list_bad_patients)
 list_patients = [list_patients[i] for i in np.argsort([int(patient.strip("AIDREAM_")) for patient in list_patients])]
 
-#D_KERNELS = {
-#    "mean_3x3": np.ones((3, 3)) / 9,
-#    "mean_5x5": np.ones((5, 5)) / 25,
-#    "mean_3x3x3": np.ones((3, 3, 3)) / 27,
-#    "mean_5x5x5": np.ones((5, 5, 5)) / 125
-#}
 
 D_KERNELS = {
      "mean_5x5x5": np.ones((5, 5, 5)) / 125

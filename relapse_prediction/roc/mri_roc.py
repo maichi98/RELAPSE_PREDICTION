@@ -9,12 +9,19 @@ import os
 
 def create_mri_roc(patient, imaging, label, feature, norm):
 
+    feature_col = f"{imaging}_{feature}" if feature is not None else imaging
+    feature_col = f"{feature_col}_{norm}_normalized"
+
+    path_roc_results = constants.dir_results / "thresholds per patient" / patient / label / f"{feature_col}.pickle"
+    path_roc_plot = constants.dir_results / "ROC per patient" / label / feature_col / f"{patient}.png"
+
+    if path_roc_results.exists() and path_roc_plot.exists():
+        print(f"ROC already generated for patient {patient}, label {label}, imaging {imaging} feature {feature} !")
+        return
+
     df_labels = labels.get_df_labels(patient, label)
     df_features = features.get_mri_features(patient, imaging, feature, norm)
     df_data = df_labels.merge(df_features, on=["x", "y", "z"], how="left")
-
-    feature_col = f"{imaging}_{feature}" if feature is not None else imaging
-    feature_col = f"{feature_col}_{norm}_normalized"
 
     create_roc(df_data, patient, label, feature_col)
 
@@ -70,17 +77,18 @@ if __name__ == "__main__":
                         help='number of CPU workers')
 
     args = parser.parse_args()
+    # list_patients = list_patients[args.start: args.end]
 
     if not args.mp:
         main(list_mri_maps=args.mri_maps,
              list_labels=args.labels,
-             list_patients=constants.list_patients[args.start: args.end],
+             list_patients=constants.list_patients,
              feature=args.feature,
              norm=args.norm)
     else:
         main_mp(list_mri_maps=args.mri_maps,
                 list_labels=args.labels,
-                list_patients=constants.list_patients[args.start: args.end],
+                list_patients=constants.list_patients,
                 feature=args.feature,
                 norm=args.norm,
                 num_workers=args.num_workers)
