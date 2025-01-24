@@ -1,8 +1,12 @@
 from relapse_prediction.features.features import create_features
 from relapse_prediction import constants, utils
 
+from concurrent.futures import ProcessPoolExecutor
 import pandas as pd
 import numpy as np
+import argparse
+import ants
+import os
 
 
 def get_mri_features(patient, imaging, feature=None, norm=None, p=2, **kwargs):
@@ -12,7 +16,9 @@ def get_mri_features(patient, imaging, feature=None, norm=None, p=2, **kwargs):
         norm = "z_score"
     feature = f"{imaging}_{feature}" if feature is not None else imaging
 
-    path_features = constants.dir_features / patient / fr"{patient}_{imaging}_features.parquet"
+    path_features = (constants.DIR_FEATURES
+                     / patient
+                     / fr"{patient}_{imaging}_features.parquet")
     if not path_features.exists():
         create_features(patient, imaging, **kwargs)
 

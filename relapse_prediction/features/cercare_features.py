@@ -5,12 +5,12 @@ import pandas as pd
 import numpy as np
 
  
-def get_cercare_features(patient, imaging, feature=None, p=None, **kwargs):
+def get_cercare_features(patient, imaging, interpolator, feature=None, p=None, **kwargs):
 
-    p = constants.dict_cercare_p[imaging] if p is None else p
+    p = constants.DICT_CERCARE_P[imaging] if p is None else p
     feature = f"{imaging}_{feature}" if feature is not None else imaging
 
-    path_features = constants.dir_features / patient / fr"{patient}_{imaging}_features.parquet"
+    path_features = constants.DIR_FEATURES / patient / fr"{patient}_{imaging}_{interpolator}_features.parquet"
     if not path_features.exists():
         create_features(patient, imaging, **kwargs)
 

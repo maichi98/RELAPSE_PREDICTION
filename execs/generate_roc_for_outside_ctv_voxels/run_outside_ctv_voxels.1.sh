@@ -16,7 +16,7 @@ DIR_PROJECT="/home/maichi/work/my_projects/AIDREAM/RELAPSE_PREDICTION"
 python "$DIR_PROJECT/relapse_prediction/roc/mri_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --voxel_strategy "OUTSIDE_CTV"\
-        --mp  --num_workers 3
+        --mp  --num_workers 10
 
 wait
 
@@ -25,7 +25,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --voxel_strategy "OUTSIDE_CTV"\
-        --mp  --num_workers 3
+        --mp  --num_workers 10
 wait
 
 # Deactivate the conda environment

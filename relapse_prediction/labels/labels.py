@@ -25,15 +25,15 @@ def index_per_region(df, shape, new_shape):
 
 def get_df_labels(patient, label):
     
-    path_labels = constants.dir_labels / f"{patient}_labels.parquet"
+    path_labels = constants.DIR_LABELS / f"{patient}_labels.parquet"
     if not path_labels.exists():
         create_labels(patient)
 
-    return pd.read_parquet(path_labels, engine="pyarrow")[['x', 'y', 'z', label]]
+    return pd.read_parquet(path_labels, engine="pyarrow")[['x', 'y', 'z', 'CTV', label]]
 
 
 def create_labels(patient):
-    path_labels = constants.dir_labels / f"{patient}_labels.parquet"
+    path_labels = constants.DIR_LABELS / f"{patient}_labels.parquet"
 
     df_mask = utils.get_df_mask(patient)
 

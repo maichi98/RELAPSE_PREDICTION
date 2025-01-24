@@ -4,21 +4,26 @@ from sklearn.metrics import roc_curve, auc
 import pickle
 
 
-def create_roc(df_data, patient, label, feature_col):
+def create_roc(df_data, patient, label, feature_col, voxel_strategy):
+
+    if voxel_strategy not in ["all_voxels", "CTV", "OUTSIDE_CTV"]:
+        raise ValueError(f"Invalid voxel strategy: {voxel_strategy}")
 
     fpr, tpr, thresholds = roc_curve(df_data[label], df_data[feature_col])
     d_res = {"fpr": fpr, "tpr": tpr, "thresholds": thresholds}
 
-    path_roc_results = constants.dir_results / "thresholds per patient" / patient / label / f"{feature_col}.pickle"
-    path_roc_results.parent.mkdir(parents=True, exist_ok=True)
+    path_thresholds = constants.dir_thresholds / voxel_strategy / patient / label / f"{feature_col}.pickle"
+    path_thresholds.parent.mkdir(parents=True, exist_ok=True)
 
-    with open(path_roc_results, "wb") as f:
+    with open(path_thresholds, "wb") as f:
         pickle.dump(d_res, f)
 
     # AUC value :
     roc_auc = auc(fpr, tpr)
-    dir_save = constants.dir_results / "ROC per patient" / label / feature_col
-    dir_save.mkdir(exist_ok=True, parents=True)
+
+    # Plot the ROC curve :
+    dir_roc_plot = constants.dir_roc / voxel_strategy / label / feature_col
+    dir_roc_plot.mkdir(exist_ok=True, parents=True)
 
     import matplotlib.pyplot as plt
 
@@ -32,5 +37,5 @@ def create_roc(df_data, patient, label, feature_col):
     plt.title(f'ROC curve for {patient}, label: {label}, feature: {feature_col}')
     plt.legend(loc="lower right")
 
-    plt.savefig(str(dir_save / f"{patient}.png"), dpi=300)
+    plt.savefig(str(dir_roc_plot / f"{patient}.png"), dpi=300)
     plt.clf()

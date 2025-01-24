@@ -18,7 +18,9 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5"\
                   "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5" \
         --voxel_strategy "all_voxels"\
-        --mp  --num_workers 3
+        --mp  --num_workers 10
+
+wait
 
 # ROC for low priority cercare features  feature_5x5x5:
 python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
@@ -27,7 +29,9 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5"\
                   "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5" \
         --voxel_strategy "all_voxels"\
-        --mp  --num_workers 3
+        --mp  --num_workers 10
+
+wait
 
 # Deactivate the conda environment
 conda deactivate

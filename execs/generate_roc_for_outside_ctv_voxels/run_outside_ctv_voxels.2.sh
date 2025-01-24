@@ -16,7 +16,7 @@ DIR_PROJECT="/home/maichi/work/my_projects/AIDREAM/RELAPSE_PREDICTION"
 python "$DIR_PROJECT/relapse_prediction/roc/mri_roc.py" \
         --labels "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5"\
         --voxel_strategy "OUTSIDE_CTV"\
-        --mp  --num_workers 6
+        --mp  --num_workers 10
 wait
 
 
@@ -25,7 +25,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
         --labels "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5"\
         --voxel_strategy "OUTSIDE_CTV"\
-        --mp  --num_workers 6
+        --mp  --num_workers 10
 
 wait
 
