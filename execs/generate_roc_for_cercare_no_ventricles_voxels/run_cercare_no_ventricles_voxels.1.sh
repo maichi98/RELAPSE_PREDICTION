@@ -16,7 +16,7 @@ DIR_PROJECT="/home/maichi/work/my_projects/AIDREAM/RELAPSE_PREDICTION"
 python "$DIR_PROJECT/relapse_prediction/roc/mri_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --reg_tp "Affine" \
-        --voxel_strategy "ALL_VOXELS"\
+        --voxel_strategy "CERCARE_NO_VENTRICLES"\
         --mp  --num_workers 2
 
 wait
@@ -26,7 +26,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --reg_tp "Affine" \
-        --voxel_strategy "ALL_VOXELS"\
+        --voxel_strategy "CERCARE_NO_VENTRICLES"\
         --mp  --num_workers 2
 wait
 
@@ -34,7 +34,7 @@ wait
 python "$DIR_PROJECT/relapse_prediction/roc/mri_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --reg_tp "SyN" \
-        --voxel_strategy "ALL_VOXELS"\
+        --voxel_strategy "CERCARE_NO_VENTRICLES"\
         --mp  --num_workers 2
 wait
 
@@ -43,7 +43,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --reg_tp "SyN" \
-        --voxel_strategy "ALL_VOXELS"\
+        --voxel_strategy "CERCARE_NO_VENTRICLES"\
         --mp  --num_workers 2
 wait
 

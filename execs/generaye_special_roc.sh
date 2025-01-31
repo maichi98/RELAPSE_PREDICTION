@@ -14,7 +14,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/mri_roc.py" \
         --labels "L2 + L3R" "L2 + L3R - (L1 + L3)"  \
         --voxel_strategy "all_voxels"\
         #--overwrite &
-        #--mp  --num_workers 4
+        #--mp  --num_workers 2
 
 wait
 
@@ -24,7 +24,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --labels "L2 + L3R" "L2 + L3R - (L1 + L3)"  \
         --voxel_strategy "all_voxels"\
         --overwrite \
-        --mp  --num_workers 4
+        --mp  --num_workers 2
 
 wait
 
@@ -33,7 +33,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/mri_roc.py" \
         --voxel_strategy "all_voxels"\
         --feature "mean_5x5x5"\
         --overwrite &
-        #--mp  --num_workers 4\
+        #--mp  --num_workers 2\
 
 wait
 
@@ -44,7 +44,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --voxel_strategy "all_voxels"\
         --feature "mean_5x5x5" \
         --overwrite
-        #--mp  --num_workers 4
+        #--mp  --num_workers 2
 
 wait
 
