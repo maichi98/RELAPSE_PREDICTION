@@ -154,7 +154,16 @@ def get_referential_table(list_patients: str = None):
 def get_has_syn_patients():
 
     df_ref = get_referential_table()
-    return df_ref[df_ref["has SyN"] == 1]["AIDREAM_ID"].tolist()
+    list_patients = df_ref.loc[df_ref["has SyN"] == 1]["AIDREAM_ID"].tolist()
+
+    list_patients = [list_patients[i]
+                     for i in np.argsort([int(p.strip("AIDREAM_"))
+                                          for p in list_patients
+                                          if p.startswith("AIDREAM_")
+                                          ])
+                     ]
+
+    return list_patients
 
 
 def get_list_patients_by_strategy(patient_strategy):
