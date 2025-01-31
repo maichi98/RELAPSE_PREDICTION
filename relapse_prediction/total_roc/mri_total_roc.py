@@ -1,21 +1,16 @@
-from relapse_prediction.constants import dir_total_thresholds
 from relapse_prediction.total_roc.total_roc import (get_list_thresholds,
                                                     get_all_fpr_tpr,
                                                     plot_total_roc,
-                                                    add_cutoff
-
-                                                    )
+                                                    add_cutoff)
 from concurrent.futures import ProcessPoolExecutor
 from relapse_prediction import constants, utils
-import pandas as pd
 from datetime import datetime
+import pandas as pd
 import argparse
-import time
-import os
 import pickle
 
 
-def create_mri_total_roc(imaging, label, feature, norm, voxel_strategy, patient_strategy, df_data):
+def create_mri_total_roc(imaging, label, reg_tp, feature, norm, voxel_strategy, patient_strategy, df_data):
 
     feature_col = f"{imaging}_{feature}" if feature is not None else imaging
     feature_col = f"{feature_col}_{norm}_normalized"

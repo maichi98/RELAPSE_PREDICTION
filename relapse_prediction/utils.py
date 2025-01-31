@@ -140,9 +140,26 @@ def normalize(s, norm):
     raise ValueError(f"{norm} must be either, min_max, max, or z_score !")
 
 
+def get_referential_table(list_patients: str = None):
+
+    path_referential_table = constants.PATH_REFERENTIAL_TABLE
+    df_referential_table = pd.read_csv(path_referential_table)
+
+    if list_patients is None:
+        return df_referential_table
+
+    return df_referential_table[df_referential_table["patient"].isin(list_patients)].reset_index(drop=True)
+
+
+def get_has_syn_patients():
+
+    df_ref = get_referential_table()
+    return df_ref[df_ref["has SyN"] == 1]["AIDREAM_ID"].tolist()
+
+
 def get_list_patients_by_strategy(patient_strategy):
 
-    path_splitting_strategy = Path(__file__).parent / "splitting_strategy.csv"
+    path_splitting_strategy = constants.PATH_SPLITTING_STRATEGY
     df_splitting_strategy = pd.read_csv(path_splitting_strategy)
 
     if patient_strategy == "all":

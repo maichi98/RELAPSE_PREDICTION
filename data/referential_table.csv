@@ -1,0 +1,187 @@
+AIDREAM_ID,cohort_ID,local_ID,perfusion,complete_validation,surgery_type,pre_RT_reference,pre_RT_TPS,valid_pre_RT_segmentation_model,valid_pre_RT_perfusion_model,Rechute_reference,Rechute_TPS,valid_Rechute_segmentation_model,valid_Rechute_perfusion_model,FREESURFER STATUS,Class,Class,has SyN
+AIDREAM_1,MMI-PROB_140,201211519BP,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_10,MMI-PROB_050,201002036RR,yes,1,2.0,AC_repATLAS native,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,False
+AIDREAM_100,MMI-PROB_139,201210738EE,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,no,ASEG,na,1,True
+AIDREAM_102,MMI-PROB_085,201101726ZB,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_103,MMI-PROB_166,201311898RR,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,3,True
+AIDREAM_104,MMI-PROB_218,201504910BD,yes,1,2.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,3,True
+AIDREAM_106,MMI-PROB_190,201408137GZ,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,1,2,True
+AIDREAM_109,MMI-PROB_036,200911485MT,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG_AUTO,na,2,True
+AIDREAM_11,MMI-PROB_002,200607993UL,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_110,MMI-PROB_188,201407081DW,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,3,True
+AIDREAM_112,MMI-PROB_096,201107190AT,yes,1,0.0,AC_repATLAS,RS,?,yes,AC_repATLAS,RS,?,?,ASEG,na,1,True
+AIDREAM_113,MMI-PROB_185,201405160XS,yes,1,0.0,AC_repATLAS,RS,?,yes,AC_repATLAS,RS,?,yes,ASEG,0,1,True
+AIDREAM_114,MMI-PROB_029,200908568XU,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,2,True
+AIDREAM_115,MMI-PROB_075,201014994MT,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,3,True
+AIDREAM_116,MMI-PROB_065,201011933ZW,yes,1,2.0,Repère natif,RS,yes,yes,Repère natif,RS,yes,yes,ASEG,na,3,False
+AIDREAM_117,MMI-PROB_194,201408905LK,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,1,True
+AIDREAM_118,MMI-PROB_035,200910594MT,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,1,True
+AIDREAM_12,MMI-PROB_186,201406359ML,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_120,MMI-PROB_134,201207696RK,yes,1,1.0,GE_repNativAXIALISEDnew,GE,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,1,True
+AIDREAM_122,MMI-PROB_101,201110480UX,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_123,MMI-PROB_116,201200724WF,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_124,MMI-PROB_152,201303986PD,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,3,True
+AIDREAM_126,MMI-PROB_212,201501269GN,yes,1,0.0,AC_repATLAS,RS,?,yes,AC_repATLAS,RS,?,yes,ASEG_AUTO,na,1,True
+AIDREAM_127,MMI-PROB_182,201403753FR,yes,1,1.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,1,True
+AIDREAM_128,MMI-PROB_127,201202698MB,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_129,MMI-PROB_087,201103192XR,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_13,MMI-PROB_123,201202214RA,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_130,MMI-PROB_220,201505918NG,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_132,MMI-PROB_219,201505745LP,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,3,True
+AIDREAM_133,MMI-PROB_159,201306695PX,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,1,True
+AIDREAM_135,MMI-PROB_046,201001930TP,yes,1,2.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,3,True
+AIDREAM_136,MMI-PROB_052,201002732UA,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_137,MMI-PROB_179,201401994MK,yes,1,2.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,2,True
+AIDREAM_139,MMI-PROB_118,201201260RX,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_14,MMI-PROB_097,201108919NW,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_140,MMI-PROB_028,200908366SN,yes,1,2.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,3,True
+AIDREAM_142,MMI-PROB_141,201213351WU,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_143,MMI-PROB_077,201015611UN,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_145,MMI-PROB_225,201508496TK,yes,1,2.0,AC_repATLAS,RS,yes,yes,,RS,no,yes,ASEG,0,3,False
+AIDREAM_146,MMI-PROB_115,201200087ZK,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,3,True
+AIDREAM_15,MMI-PROB_103,201111208TA,yes,1,0.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,True
+AIDREAM_151,MMI-PROB_223,201507804HR,yes,1,2.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,1,3,True
+AIDREAM_152,MMI-PROB_195,201409245HA,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,2,True
+AIDREAM_16,MMI-PROB_032,200910117AG,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_17,MMI-PROB_066,201012170RD,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_19,MMI-PROB_089,201103285BS,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_2,MMI-PROB_209,201417961NT,yes,1,2.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,3,True
+AIDREAM_20,MMI-PROB_071,201013462XN,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_200,new400pat,201608396TF,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,3,False
+AIDREAM_201,new400pat,201609999GD,yes,1,2.0,GE_repNATIV,RS,yes,yes,skullstripaxialized RS recalé sur GE,RS,yes,yes,ASEG,0,3,False
+AIDREAM_202,new400pat,201612642EW,yes,1,2.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,True
+AIDREAM_203,new400pat,201600172XX,yes,1,1.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,no,yes,ASEG,1,1,False
+AIDREAM_206,new400pat,201800429GX,yes,1,1.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,False
+AIDREAM_208,new400pat,201804859WT,yes,1,1.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,False
+AIDREAM_21,MMI-PROB_162,201308292HE,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG_AUTO,na,2,True
+AIDREAM_22,MMI-PROB_163,201308549PZ,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_224,MMI-PROB_048,201002029TL,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_225,MMI-PROB_214,201502349GK,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_226,MMI-PROB_064,201011546ZF,yes,1,0.0,skullstripaxialized RS recalé sur GE,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,1,True
+AIDREAM_227,MMI-PROB_100,201109985TU,yes,1,0.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG_AUTO,na,1,True
+AIDREAM_228,MMI-PROB_193,201408904KA,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,1,True
+AIDREAM_230,MMI-PROB_196,201410119XN,yes,1,1.0,GE_repNativAXIALISEDnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,2,True
+AIDREAM_231,MMI-PROB_043,201000229TN,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_232,MMI-PROB_061,201009189MB,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_233,MMI-PROB_175,201316681KG,yes,1,0.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,1,True
+AIDREAM_234,MMI-PROB_234,201513262BN,yes,1,2.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,1,3,True
+AIDREAM_238,MMI-PROB_078,201016291BF,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,1,1,True
+AIDREAM_24,MMI-PROB_047,201001944AK,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG_AUTO,0,1,True
+AIDREAM_240,MMI-PROB_059,201006699RB,yes,1,1.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,2,True
+AIDREAM_241,MMI-PROB_073,201014674FH,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_242,MMI-PROB_001,200603747LZ,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_243,MMI-PROB_021,200902315BH,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_244,MMI-PROB_215,201503682HB,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_245,MMI-PROB_154,201305042UL,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_248,new400pat,201806728SP,yes,1,1.0,GE_repNATIV,RS,yes,yes,Repère natif,RS,yes,yes,ASEG,0,1,False
+AIDREAM_26,MMI-PROB_147,201218150ZZ,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_28,MMI-PROB_106,201113274AE,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_3,MMI-PROB_180,201403747KU,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_301,new400pat,202009913GU,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,False
+AIDREAM_306,new400pat,201317056FU,yes,1,1.0,GE_repNativAXIALISEDnew,GE,yes,yes,,RS,yes,yes,ASEG_AUTO,na,1,False
+AIDREAM_307,new400pat,201501780EE,yes,1,1.0,GE_repNativAXIALISEDnew,GE,yes,yes,,RS,yes,yes,ASEG,1,1,False
+AIDREAM_308,new400pat,201508980RE,yes,1,2.0,GE_repNATIV,RS,yes,yes,,RS,yes,yes,ASEG,0,3,False
+AIDREAM_31,MMI-PROB_025,200906524KR,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_310,new400pat,201511878RF,yes,1,2.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,3,True
+AIDREAM_311,new400pat,201514528KM,yes,1,1.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,True
+AIDREAM_312,new400pat,201518647SW,yes,1,0.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,False
+AIDREAM_314,new400pat,201515720DG,yes,1,0.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,True
+AIDREAM_315,new400pat,201518309LN,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,3,False
+AIDREAM_317,new400pat,201605308FM,yes,1,1.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,True
+AIDREAM_319,new400pat,201608532HK,yes,1,0.0,GE_repNativAXIALISEDnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG_AUTO,0,1,True
+AIDREAM_32,MMI-PROB_076,201015609EE,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_320,new400pat,201703437HA,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,1,2,False
+AIDREAM_322,new400pat,201805698ZH,yes,1,0.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,False
+AIDREAM_323,new400pat,201807844SF,yes,1,1.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,False
+AIDREAM_326,new400pat,201818413KF,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,3,False
+AIDREAM_327,new400pat,201819673WW,yes,1,0.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,1,1,False
+AIDREAM_328,new400pat,201900342AU,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,3,False
+AIDREAM_329,new400pat,201901093FE,yes,1,0.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,False
+AIDREAM_33,MMI-PROB_027,200908345NN,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_331,new400pat,201903389TG,yes,1,2.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,3,True
+AIDREAM_332,new400pat,201903402AL,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,False
+AIDREAM_34,MMI-PROB_172,201314852GU,yes,1,1.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,1,True
+AIDREAM_341,new400pat,201916757XL,yes,1,0.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,False
+AIDREAM_342,new400pat,201918259WG,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,3,False
+AIDREAM_343,new400pat,201918777DM,yes,1,2.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,True
+AIDREAM_344,new400pat,201919272RN,yes,1,0.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,False
+AIDREAM_345,new400pat,201919513NU,yes,1,2.0,GE_repNativAXIALISEDnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,MISSING,0,3,True
+AIDREAM_346,new400pat,201920068KE,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,3,False
+AIDREAM_348,new400pat,202000740SF,yes,1,2.0,GE_repNATIV,RS,yes,yes,,RS,yes,yes,ASEG,0,3,False
+AIDREAM_349,new400pat,202001975GT,yes,1,2.0,skullstripaxialized RS recalé sur GE,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,3,True
+AIDREAM_35,MMI-PROB_099,201109614EL,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_356,new400pat,201605458NH,yes,1,2.0,skullstripaxialized RS recalé sur GE,RS,yes,yes,Repère natif,RS,yes,yes,ASEG,na,3,False
+AIDREAM_357,new400pat,201606429MZ,yes,1,2.0,"JBD : Quel repère ? Pas de crâne, jcomprends pas",RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,True
+AIDREAM_358,new400pat,201608217HU,yes,1,1.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,1,1,True
+AIDREAM_359,new400pat,201609520FN,yes,1,2.0,GE_repNativAXIALISEDnew,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,True
+AIDREAM_36,MMI-PROB_149,201301550UM,yes,1,2.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,3,True
+AIDREAM_360,new400pat,201610004RH,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,False
+AIDREAM_361,new400pat,201611613AB,yes,1,0.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG_AUTO,0,1,True
+AIDREAM_362,new400pat,201612645HZ,yes,1,1.0,skullstripaxialized RS recalé sur GE,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,True
+AIDREAM_363,new400pat,201614232AX,yes,1,0.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,1,True
+AIDREAM_364,new400pat,201614638NE,yes,1,0.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,True
+AIDREAM_365,new400pat,201617927TX,yes,1,0.0,GE_repNativAXIALISEDnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,True
+AIDREAM_366,new400pat,201618280KP,yes,1,1.0,GE_repNativnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,True
+AIDREAM_367,new400pat,201618283NS,yes,1,2.0,skullstripaxialized RS recalé sur GE,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,3,True
+AIDREAM_371,new400pat,201701408DA,yes,1,2.0,GE_repNATIV,RS,yes,yes,Repère natif,RS,yes,yes,ASEG,0,3,False
+AIDREAM_372,new400pat,201701722BF,yes,1,1.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,1,2,False
+AIDREAM_373,new400pat,201702500UN,yes,1,1.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,False
+AIDREAM_374,new400pat,201702890LE,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,2,False
+AIDREAM_375,new400pat,201702900AP,yes,1,0.0,GE_repNativAXIALISEDnew,GE,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,1,True
+AIDREAM_378,new400pat,201704976UL,yes,1,0.0,GE_repNATIV,RS,yes,yes,skullstripaxialized RS recalé sur GE,RS,yes,yes,ASEG,0,1,False
+AIDREAM_379,new400pat,201705202XD,yes,1,2.0,GE_repNATIV,RS,yes,yes,skullstripaxialized RS recalé sur GE,RS,yes,yes,ASEG,0,2,False
+AIDREAM_38,MMI-PROB_104,201111741WA,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_380,new400pat,201705788XE,yes,1,0.0,GE_repNATIV,RS,yes,yes,skullstripaxialized RS recalé sur GE,RS,yes,yes,ASEG,0,1,False
+AIDREAM_381,new400pat,201705934NR,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,False
+AIDREAM_382,new400pat,201706189SE,yes,1,0.0,GE_repNATIV,RS,yes,yes,skullstripaxialized RS recalé sur GE,RS,yes,yes,ASEG,0,1,False
+AIDREAM_385,new400pat,201708876ZA,yes,1,0.0,GE_repNATIV,RS,yes,yes,skullstripaxialized RS recalé sur GE,RS,yes,yes,ASEG,0,1,False
+AIDREAM_39,MMI-PROB_072,201013862DP,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_390,new400pat,201714541FT,yes,1,0.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG_AUTO,0,1,False
+AIDREAM_391,new400pat,201716331EH,yes,1,0.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG_AUTO,0,1,False
+AIDREAM_394,new400pat,201717520FK,yes,1,0.0,GE_repNATIV,RS,yes,yes,skullstripaxialized RS recalé sur GE,RS,yes,yes,ASEG,0,1,False
+AIDREAM_4,MMI-PROB_069,201012761ZT,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_400,new400pat,201800828LP,yes,1,2.0,GE_repNATIV,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,0,2,False
+AIDREAM_41,MMI-PROB_221,201505919PR,yes,1,0.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG_AUTO,0,1,True
+AIDREAM_44,MMI-PROB_165,201311323TG,yes,1,2.0,AC_repATLAS,RS,?,yes,AC_repATLAS,RS,?,?,ASEG,0,3,True
+AIDREAM_45,MMI-PROB_199,201410625AS,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_46,MMI-PROB_189,201407785SE,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,2,True
+AIDREAM_48,MMI-PROB_204,201413544EH,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,1,True
+AIDREAM_49,MMI-PROB_125,201202395EE,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_50,MMI-PROB_109,201115683HP,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_51,MMI-PROB_094,201106485HW,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_52,MMI-PROB_042,201000220GF,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_53,MMI-PROB_060,201008787RS,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_54,MMI-PROB_079,201016675KD,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG_AUTO,na,1,True
+AIDREAM_56,MMI-PROB_126,201202399KR,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG_AUTO,na,1,True
+AIDREAM_59,MMI-PROB_145,201215368KD,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_6,MMI-PROB_124,201202347AH,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_60,MMI-PROB_184,201404604AK,yes,1,0.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,1,1,True
+AIDREAM_61,MMI-PROB_088,201103194AK,yes,1,0.0,AC_repATLAS,RS,yes,yes,,RS,no,yes,ASEG,na,1,False
+AIDREAM_62,MMI-PROB_151,201302634AU,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG_AUTO,na,1,True
+AIDREAM_64,MMI-PROB_230,201509532HM,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_65,MMI-PROB_053,201003448BZ,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_67,MMI-PROB_080,201016836HT,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_68,MMI-PROB_030,200908575UA,yes,1,1.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,1,True
+AIDREAM_69,MMI-PROB_146,201216562FR,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,1,True
+AIDREAM_7,MMI-PROB_169,201313818HN,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,3,True
+AIDREAM_71,MMI-PROB_049,201002031KU,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_72,MMI-PROB_051,201002318UN,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_73,MMI-PROB_177,201400506WA,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,2,True
+AIDREAM_75,MMI-PROB_232,201512724ED,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_76,MMI-PROB_031,200909466UA,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_80,MMI-PROB_122,201201866GS,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_81,MMI-PROB_153,201304380AN,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_82,MMI-PROB_170,201313946LA,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,2,True
+AIDREAM_84,MMI-PROB_057,201005689NN,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_85,MMI-PROB_235,201513514BM,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,0,3,True
+AIDREAM_88,MMI-PROB_063,201010516TB,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_89,MMI-PROB_041,200916887BP,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_9,MMI-PROB_107,201113326XP,yes,1,1.0,AC_repATLAS,RS,yes,yes,GE_repNativAXIALISEDnew,GE,yes,yes,ASEG,na,2,True
+AIDREAM_90,MMI-PROB_095,201106488MZ,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_92,MMI-PROB_067,201012465AL,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,3,True
+AIDREAM_93,MMI-PROB_200,201410954GB,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,1,1,True
+AIDREAM_94,MMI-PROB_207,201417212ZS,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_96,MMI-PROB_024,200905136GL,yes,1,0.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,1,True
+AIDREAM_97,MMI-PROB_133,201207611ZA,yes,1,2.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,1,3,True
+AIDREAM_98,MMI-PROB_201,201411104RP,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True
+AIDREAM_99,MMI-PROB_150,201301876KD,yes,1,1.0,AC_repATLAS,RS,yes,yes,AC_repATLAS,RS,yes,yes,ASEG,na,2,True

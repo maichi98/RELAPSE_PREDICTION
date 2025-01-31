@@ -17,7 +17,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/mri_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --reg_tp "Affine" \
         --voxel_strategy "CERCARE_ONLY"\
-        --mp  --num_workers 2
+        --mp  --num_workers 3
 
 wait
 
@@ -27,7 +27,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --reg_tp "Affine" \
         --voxel_strategy "CERCARE_ONLY"\
-        --mp  --num_workers 2
+        --mp  --num_workers 3
 wait
 
 # ROC for MRI features for high priority labels with SyN registration for labels :
@@ -35,7 +35,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/mri_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --reg_tp "SyN" \
         --voxel_strategy "CERCARE_ONLY"\
-        --mp  --num_workers 2
+        --mp  --num_workers 3
 wait
 
 # ROC for high priority cercare features for high priority labels with SyN registration for labels :
@@ -44,7 +44,7 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
         --reg_tp "SyN" \
         --voxel_strategy "CERCARE_ONLY"\
-        --mp  --num_workers 2
+        --mp  --num_workers 3
 wait
 
 # Deactivate the conda environment

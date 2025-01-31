@@ -60,12 +60,14 @@ def main(list_patients, list_mri_maps, list_labels, reg_tp, feature, norm, voxel
                 try:
                     create_mri_roc(patient=patient, imaging=imaging, label=label, reg_tp=reg_tp,
                                    feature=feature, norm=norm, voxel_strategy=voxel_strategy, overwrite=overwrite)
-                    print(f"ROC generated for patient {patient}, imaging {imaging}, label {label},"
-                          f"reg_tp {reg_tp}, feature {feature}, norm {norm}, voxel strategy {voxel_strategy}!")
+                    print(f"ROC generated for patient :  {patient}, imaging :  {imaging}, label :  {label},"
+                          f"reg_tp :  {reg_tp}, feature :  {feature}, norm :  {norm},"
+                          f" voxel strategy :  {voxel_strategy}!")
 
                 except Exception as e:
-                    print(f"Error for patient {patient}, imaging {imaging}, label {label},"
-                          f"reg_tp {reg_tp}, feature {feature}, norm {norm}, voxel strategy {voxel_strategy}!")
+                    print(f"Error for patient :  {patient}, imaging :  {imaging}, label :  {label},"
+                          f"reg_tp :  {reg_tp}, feature :  {feature}, norm :  {norm},"
+                          f" voxel strategy :  {voxel_strategy}!")
                     print(e)
                     continue
 
@@ -75,11 +77,13 @@ def process_patient_imaging_label(tpl):
     try:
         create_mri_roc(patient=patient, imaging=imaging, label=label, reg_tp=reg_tp,
                        feature=feature, norm=norm, voxel_strategy=voxel_strategy, overwrite=overwrite)
-        print(f"ROC generated for patient {patient}, imaging {imaging}, label {label},"
-              f"reg_tp {reg_tp}, feature {feature}, norm {norm}, voxel strategy {voxel_strategy}!")
+        print(f"ROC generated for patient :  {patient}, imaging :  {imaging}, label :  {label},"
+              f"reg_tp :  {reg_tp}, feature :  {feature}, norm :  {norm},"
+              f" voxel strategy :  {voxel_strategy}!")
     except Exception as e:
-        print(f"Error for patient {patient}, imaging {imaging}, label {label},"
-              f"reg_tp {reg_tp}, feature {feature}, norm {norm}, voxel strategy {voxel_strategy}!")
+        print(f"Error for patient :  {patient}, imaging :  {imaging}, label :  {label},"
+              f"reg_tp :  {reg_tp}, feature :  {feature}, norm :  {norm},"
+              f" voxel strategy :  {voxel_strategy}!")
         print(e)
 
 
@@ -135,6 +139,10 @@ if __name__ == "__main__":
                         help='number of CPU workers')
 
     args = parser.parse_args()
+
+    if args.reg_tp == "SyN":
+        list_patients = utils.get_has_syn_patients()
+
     list_patients = list_patients[args.start: args.end]
 
     if not args.mp:

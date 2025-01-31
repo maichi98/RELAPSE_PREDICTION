@@ -1,5 +1,3 @@
-import pandas as pd
-
 from relapse_prediction.total_roc.total_roc import (get_list_thresholds,
                                                     get_all_fpr_tpr,
                                                     plot_total_roc,
@@ -9,13 +7,12 @@ from relapse_prediction import constants, utils
 
 from concurrent.futures import ProcessPoolExecutor
 from datetime import datetime
+import pandas as pd
 import argparse
 import pickle
-import time
-import os
 
 
-def create_cercare_total_roc(imaging, label, feature, voxel_strategy, patient_strategy, df_data):
+def create_cercare_total_roc(imaging, label, reg_tp, feature, interpolator, voxel_strategy, patient_strategy, df_data):
 
     feature_col = f"{imaging}_{feature}" if feature is not None else imaging
     feature_col = f"{feature_col}_quantized"
