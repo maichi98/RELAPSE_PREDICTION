@@ -25,7 +25,7 @@ wait
 
 # ROC for high priority cercare features for high priority labels with Affine registration for labels :
 python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
-        --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
+        --cercare_maps "COV" "Delay" "rLeakage" \
         --labels "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5" \
         --reg_tp "Affine" \
         --voxel_strategy "CERCARE_NO_VENTRICLES"\
@@ -54,7 +54,7 @@ wait
 
 # ROC for high priority cercare features for high priority labels with Affine registration for labels :
 python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
-        --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
+        --cercare_maps "COV" "Delay" "rLeakage" \
         --labels "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5" \
         --reg_tp "SyN" \
         --voxel_strategy "CERCARE_NO_VENTRICLES"\
@@ -69,6 +69,6 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --voxel_strategy "CERCARE_NO_VENTRICLES"\
         --feature "mean_5x5x5"\
         --mp  --num_workers 2
-wait
+
 # Deactivate the conda environment
 conda deactivate
