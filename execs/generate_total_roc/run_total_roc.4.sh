@@ -15,7 +15,7 @@ DIR_PROJECT="/home/maichi/work/my_projects/AIDREAM/RELAPSE_PREDICTION"
 
 # Define the voxel strategies and patient strategies
 VOXEL_STRATEGIES=("ALL_VOXELS")
-PATIENT_STRATEGIES=("all" "SyN_patients" "Class" "surgery_type")
+PATIENT_STRATEGIES=("SyN_patients" "Class" "surgery_type")
 
 # Loop through each combination of voxel strategies and patient strategies
 for voxel_strategy in "${VOXEL_STRATEGIES[@]}"; do
@@ -24,7 +24,7 @@ for voxel_strategy in "${VOXEL_STRATEGIES[@]}"; do
         # Run total ROC generation for MRI maps
         python "$DIR_PROJECT/relapse_prediction/total_roc/mri_total_roc.py" \
             --labels "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5"\
-            --reg_tps "Affine"\
+            --reg_tps "SyN"\
             --voxel_strategy "$voxel_strategy" \
             --patient_strategy "$patient_strategy"
 
@@ -32,7 +32,7 @@ for voxel_strategy in "${VOXEL_STRATEGIES[@]}"; do
         python "$DIR_PROJECT/relapse_prediction/total_roc/cercare_total_roc.py" \
             --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
             --labels "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5"\
-            --reg_tps "Affine"\
+            --reg_tps "SyN"\
             --voxel_strategy "$voxel_strategy" \
             --patient_strategy "$patient_strategy"
 
@@ -40,7 +40,7 @@ for voxel_strategy in "${VOXEL_STRATEGIES[@]}"; do
             --cercare_maps "Delay" "rLeakage" "COV" \
             --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5"\
                      "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5" \
-            --reg_tps "Affine"\
+            --reg_tps "SyN"\
             --voxel_strategy "$voxel_strategy" \
             --patient_strategy "$patient_strategy"
 

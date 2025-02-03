@@ -14,21 +14,31 @@ conda activate env_relapse_prediction
 DIR_PROJECT="/home/maichi/work/my_projects/AIDREAM/RELAPSE_PREDICTION"
 
 # Define the voxel strategies and patient strategies
-VOXEL_STRATEGIES=("all_voxels" "CTV" "OUTSIDE_CTV")
-PATIENT_STRATEGIES=("all" "Class" "surgery_type" "IDH")
+VOXEL_STRATEGIES=("ALL_VOXELS")
+PATIENT_STRATEGIES=("SyN_patients" "Class" "surgery_type")
 
 # Loop through each combination of voxel strategies and patient strategies
 for voxel_strategy in "${VOXEL_STRATEGIES[@]}"; do
     for patient_strategy in "${PATIENT_STRATEGIES[@]}"; do
-        python "$DIR_PROJECT/relapse_prediction/total_roc/cercare_total_roc.py" \
-            --cercare_maps "Delay" "COV" "rLeakage" \
-            --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5"\
-                     "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5"\
+
+        # Run total ROC generation for MRI maps
+        python "$DIR_PROJECT/relapse_prediction/total_roc/mri_total_roc.py" \
+            --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
+            --reg_tps "SyN"\
             --voxel_strategy "$voxel_strategy" \
-            --patient_strategy "$patient_strategy"\
-            --mp --num_workers 4
+            --patient_strategy "$patient_strategy"
+
+
+        python "$DIR_PROJECT/relapse_prediction/total_roc/cercare_total_roc.py" \
+            --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
+            --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5" \
+            --reg_tps "SyN"\
+            --voxel_strategy "$voxel_strategy" \
+            --patient_strategy "$patient_strategy"
+
     done
 done
+
 
 # Deactivate the conda environment
 conda deactivate

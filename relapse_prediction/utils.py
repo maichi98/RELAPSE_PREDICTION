@@ -166,27 +166,28 @@ def get_has_syn_patients():
     return list_patients
 
 
-def get_list_patients_by_strategy(patient_strategy):
+def get_list_patients_by_strategy(patient_strategy, reg_tp):
 
-    path_splitting_strategy = constants.PATH_SPLITTING_STRATEGY
-    df_splitting_strategy = pd.read_csv(path_splitting_strategy)
+    df_ref = get_referential_table()
+
+    if reg_tp == "SyN":
+        df_ref = df_ref.loc[df_ref["has SyN"]]
 
     if patient_strategy == "all":
-        return {"all": df_splitting_strategy["patient"].tolist()}
+        return {"all": df_ref["AIDREAM_ID"].tolist()}
+
+    if patient_strategy == "SyN_patients":
+        return {"SyN_patients": get_has_syn_patients()}
 
     if patient_strategy == "Class":
-        return {"Class_1": df_splitting_strategy[df_splitting_strategy["Class"] == 1]["patient"].tolist(),
-                "Class_2": df_splitting_strategy[df_splitting_strategy["Class"] == 2]["patient"].tolist(),
-                "Class_3": df_splitting_strategy[df_splitting_strategy["Class"] == 3]["patient"].tolist()}
+        return {"Class_1": df_ref.loc[df_ref["Class"] == 1]["AIDREAM_ID"].tolist(),
+                "Class_2": df_ref.loc[df_ref["Class"] == 2]["AIDREAM_ID"].tolist(),
+                "Class_3": df_ref.loc[df_ref["Class"] == 3]["AIDREAM_ID"].tolist()}
 
     if patient_strategy == "surgery_type":
-        return {"Biopsy": df_splitting_strategy[df_splitting_strategy["surgery_type"] == 0]["patient"].tolist(),
-                "STR": df_splitting_strategy[df_splitting_strategy["surgery_type"] == 1]["patient"].tolist(),
-                "GTR": df_splitting_strategy[df_splitting_strategy["surgery_type"] == 2]["patient"].tolist()}
+        return {"GTR": df_ref.loc[df_ref["surgery_type"] == 0]["AIDREAM_ID"].tolist(),
+                "STR": df_ref.loc[df_ref["surgery_type"] == 1]["AIDREAM_ID"].tolist(),
+                "Biopsy": df_ref.loc[df_ref["surgery_type"] == 2]["AIDREAM_ID"].tolist()}
 
-    if patient_strategy == "IDH":
-        return {"IDHwt": df_splitting_strategy[df_splitting_strategy["IDH_status"] == 0]["patient"].tolist(),
-                "IDHm": df_splitting_strategy[df_splitting_strategy["IDH_status"] == 1]["patient"].tolist(),
-                "IDH_unknown": df_splitting_strategy[df_splitting_strategy["IDH_status"] == 'na']["patient"].tolist()}
-
-    raise ValueError(f"{patient_strategy} must be either, all, Class, surgery_type, or IDH !")
+    raise ValueError(f"patient strategy {patient_strategy} is not valid,"
+                     f" must be either all, SyN_patients, Class or surgery_type !")
