@@ -11,8 +11,8 @@ conda activate env_relapse_prediction
 DIR_PROJECT="/home/maichi/work/my_projects/AIDREAM/RELAPSE_PREDICTION"
 
 source "$DIR_PROJECT/execs/generate_total_roc/run_total_roc.1.sh"
-
 source "$DIR_PROJECT/execs/generate_total_roc/run_total_roc.2.sh"
-
+source "$DIR_PROJECT/execs/generate_total_roc/run_total_roc.3.sh"
+source "$DIR_PROJECT/execs/generate_total_roc/run_total_roc.4.sh"
 
 conda deactivate
