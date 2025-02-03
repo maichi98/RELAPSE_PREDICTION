@@ -15,7 +15,7 @@ DIR_PROJECT="/home/maichi/work/my_projects/AIDREAM/RELAPSE_PREDICTION"
 
 # Define the voxel strategies and patient strategies
 VOXEL_STRATEGIES=("ALL_VOXELS")
-PATIENT_STRATEGIES=("all" "SyN_patients" "Class" "surgery_type")
+PATIENT_STRATEGIES=("all" "SyN_patients")
 
 # Loop through each combination of voxel strategies and patient strategies
 for voxel_strategy in "${VOXEL_STRATEGIES[@]}"; do

@@ -26,6 +26,14 @@ wait
 # ROC for high priority cercare features for high priority labels with Affine registration for labels :
 python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
+        --labels "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5" \
+        --reg_tp "Affine" \
+        --voxel_strategy "ALL_VOXELS"\
+        --mp  --num_workers 2
+wait
+
+# ROC for high priority cercare features for high priority labels with Affine registration for labels :
+python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5"\
                   "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5" \
         --reg_tp "Affine" \
@@ -44,9 +52,17 @@ python "$DIR_PROJECT/relapse_prediction/roc/mri_roc.py" \
         --mp  --num_workers 2
 wait
 
-# ROC for high priority cercare features for high priority labels with SyN registration for labels :
+# ROC for high priority cercare features for high priority labels with Affine registration for labels :
 python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --cercare_maps "CTH" "OEF" "rCBV" "rCMRO2" \
+        --labels "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5" \
+        --reg_tp "SyN" \
+        --voxel_strategy "ALL_VOXELS"\
+        --mp  --num_workers 2
+wait
+
+# ROC for high priority cercare features for high priority labels with Affine registration for labels :
+python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --labels "L3R" "L3R_5x5x5" "L2" "L2_5x5x5" "L3R - (L1 + L3)" "L3R - (L1 + L3)_5x5x5"\
                   "L5" "L5_5x5x5" "L3" "L3_5x5x5" "L3 + L3R" "L3 + L3R_5x5x5" "L1" "L1_5x5x5" "L4" "L4_5x5x5" \
         --reg_tp "SyN" \
@@ -54,6 +70,5 @@ python "$DIR_PROJECT/relapse_prediction/roc/cercare_roc.py" \
         --feature "mean_5x5x5"\
         --mp  --num_workers 2
 wait
-
 # Deactivate the conda environment
 conda deactivate
