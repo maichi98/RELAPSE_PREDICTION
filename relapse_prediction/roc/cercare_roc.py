@@ -123,8 +123,10 @@ if __name__ == "__main__":
     parser.add_argument('--reg_tp', default="Affine",
                         help='choice of registration type')
 
-    parser.add_argument('--feature', default=None,
-                        help="choice of feature")
+    parser.add_argument('--feature',
+                        default=None,
+                        type=lambda x: None if x.lower() == 'none' else x,
+                        help="choice of feature (pass 'None' to get the default None value)")
 
     parser.add_argument('--interpolators', nargs='+', default=constants.LIST_INTERPOLATORS,
                         help='list of interpolators')
